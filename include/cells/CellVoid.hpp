@@ -3,5 +3,5 @@
 
 class CellVoid : public Cell {
 public:
-    virtual Coord update(Coord current_pos) override;
+    virtual void update(Coord pos, World& world) override;
 };

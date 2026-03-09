@@ -1,7 +1,8 @@
 #pragma once
-#include "utils/Coord.hpp"
-#include "core/World.hpp"
 #include <cstdint>
+#include "utils/Coord.hpp"
+
+class World;
 
 enum class Mobility : uint8_t {
     STATIC,     // Will not move no matter what
@@ -11,7 +12,8 @@ enum class Mobility : uint8_t {
 
 class Cell {
 private:
-    Mobility mobility;
+    Mobility mobility = Mobility::STATIC;
+
 public:
-    virtual void update(World& world);
+    virtual void update(Coord pos, World& world);
 };

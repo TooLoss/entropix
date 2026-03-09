@@ -1,5 +1,7 @@
 #include "cells/CellVoid.hpp"
+#include "core/World.hpp"
 
-Coord CellVoid::update(Coord current_pos) {
-    return current_pos;
+void CellVoid::update(Coord pos, World& world) {
+    // Void do nothing
+    return;
 }

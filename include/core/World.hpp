@@ -1,19 +1,29 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "cells/Cell.hpp"
 #include "utils/Coord.hpp"
+#include "cells/Cell.hpp"
+#include "core/CellRegistry.hpp"
+
+struct Pixel {
+    int id;
+};
 
 class World {
 private:
     Coord size;
-    std::vector<std::shared_ptr<Cell>> grid;
-    std::shared_ptr<Cell> void_cell;
+    std::vector<Pixel> grid;
+    CellRegistry registry;
 
 public:
     World(Coord size);
 
+    void init_cells();
     void refresh();
-    void set_cell(Coord pos, std::shared_ptr<Cell> new_cell);
-    std::shared_ptr<Cell> get_cell(Coord pos) const;
+    void set_pixel(Coord pos, Pixel pixel);
+    Pixel get_pixel(Coord pos);
+    bool is_empty(Coord pos);
+    CellRegistry& get_registry();
+    std::vector<Pixel>& get_grid();
+    Coord get_size();
 };
