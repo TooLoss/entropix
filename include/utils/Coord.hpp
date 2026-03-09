@@ -1,7 +1,5 @@
 #pragma once
 
-namespace utils {
-
 struct Coord {
     int x;
     int y;
@@ -13,8 +11,36 @@ struct Coord {
     bool operator>(int i) const { return (this->x > i) && (this->y > i); }
     bool operator==(int i) const { return (this->x == i) && (this->y == i); }
     bool operator==(const Coord& i) const { return (this->x == i.x) && (this->y == i.y); }
+    bool operator!=(const Coord& other) const { return !(*this == other); }
     Coord operator*(int i) const { return Coord(this->x * i, this->y * i); }
+
+    struct Iterator {
+        int curX, curY, width;
+
+        Coord operator*() const; 
+
+        Iterator& operator++() {
+            curX++;
+            if (curX >= width) { curX = 0; curY++; }
+            return *this;
+        }
+
+        bool operator!=(const Iterator& other) const {
+            return curY < other.curY || (curY == other.curY && curX < other.curX);
+        }
+    };
+
+    struct Range {
+        int w, h;
+        Iterator begin() const { return Iterator{0, 0, w}; }
+        Iterator end() const { return Iterator{0, h, w}; }
+    };
+
+    Range all_points() const { return Range{x, y}; }
+
+    int vector_to_index(Coord size) const { return size.x * y + x; }
 };
 
-
+inline Coord Coord::Iterator::operator*() const {
+    return Coord(curX, curY);
 }
