@@ -1,12 +1,13 @@
 #pragma once
 #include <memory>
 #include <array>
-#include "cells/Cell.hpp"
 #include <stdint.h>
+#include "cells/Cells.hpp"
 
 enum class CellID : uint8_t {
     VOID      =  0,
     CONCRETE  =  1,
+    SAND      =  2,
 };
 
 class CellRegistry {

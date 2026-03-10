@@ -1,5 +1,6 @@
 add_library(sand_lib STATIC 
     core/World.cpp 
+    render/TerminalRender.cpp
     cells/Cell.cpp
 )
 
