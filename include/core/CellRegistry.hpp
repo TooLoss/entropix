@@ -27,5 +27,6 @@ public:
         cell_list[id_int] = std::make_unique<T>();
     }
 
-    const std::unique_ptr<Cell> get(uint8_t id) const;
+    const Cell& get(CellID cell_id) const;
+    const Cell& get(uint8_t id) const;
 };
