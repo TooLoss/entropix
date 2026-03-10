@@ -1,7 +1,10 @@
 add_library(sand_lib STATIC 
     core/World.cpp 
+    core/CellRegistry.cpp
     render/TerminalRender.cpp
     cells/Cell.cpp
+    cells/CellVoid.cpp
+    cells/CellSand.cpp
 )
 
 target_include_directories(sand_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
