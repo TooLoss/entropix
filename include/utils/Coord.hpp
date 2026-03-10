@@ -17,16 +17,20 @@ struct Coord {
     struct Iterator {
         int curX, curY, width;
 
-        Coord operator*() const; 
+        Coord operator*() const { return Coord(curX, curY); }
 
         Iterator& operator++() {
             curX++;
-            if (curX >= width) { curX = 0; curY++; }
+            if (curX >= width) { 
+                curX = 0; 
+                curY++; 
+            }
             return *this;
         }
 
         bool operator!=(const Iterator& other) const {
-            return curY < other.curY || (curY == other.curY && curX < other.curX);
+            if (curY != other.curY) return true;
+            return curX != other.curX;
         }
     };
 
@@ -40,7 +44,3 @@ struct Coord {
 
     int vector_to_index(Coord size) const { return size.x * y + x; }
 };
-
-inline Coord Coord::Iterator::operator*() const {
-    return Coord(curX, curY);
-}

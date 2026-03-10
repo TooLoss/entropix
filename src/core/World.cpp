@@ -7,7 +7,7 @@ World::World(Coord size) : size(size), registry() {
 
 void World::refresh() {
     for (Coord c : size.all_points()) {
-        Coord reversed = this->size + c*-1;
+        Coord reversed(size.x - 1 - c.x, size.y - 1 - c.y);
         Pixel current_pixel = grid[reversed.vector_to_index(size)];
         const Cell& current_cell = registry.get(current_pixel.id);
         current_cell.update(reversed, *this);
@@ -59,7 +59,7 @@ void World::swap(Coord in, Coord out) {
 }
 
 bool World::is_out_of_range(Coord pos) const {
-    return (pos.x >= this->size.x || pos.y >= this->size.y);
+    return (pos.x >= this->size.x || pos.y >= this->size.y || !(pos >= 0));
 }
 
 Pixel World::create_pixel_id(CellID id) const {

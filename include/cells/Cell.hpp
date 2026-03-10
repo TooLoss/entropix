@@ -15,7 +15,7 @@ private:
     Mobility mobility = Mobility::STATIC;
 
 public:
-    virtual void update(Coord pos, World& world) const;
+    virtual ~Cell();
 
-    void move_to(Coord in, Coord out, World& world) const;
+    virtual void update(Coord pos, World& world) const = 0;
 };

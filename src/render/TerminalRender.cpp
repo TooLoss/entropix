@@ -14,5 +14,7 @@ void TerminalRender::print() const {
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
+    std::cout << std::endl;
 }
 

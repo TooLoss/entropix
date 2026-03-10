@@ -12,6 +12,12 @@ int main(int argc, char *argv[]) {
     render->print();
     world->refresh();
     render->print();
+    world->refresh();
+    world->refresh();
+    world->refresh();
+    world->refresh();
+    world->refresh();
+    render->print();
 
     return 0;
 }

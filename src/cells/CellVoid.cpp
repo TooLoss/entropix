@@ -1,7 +1,6 @@
 #include "cells/CellVoid.hpp"
-#include "core/World.hpp"
 
-void CellVoid::update(Coord pos, World& world) {
+void CellVoid::update(Coord pos, World& world) const {
     // Void do nothing
     return;
 }
