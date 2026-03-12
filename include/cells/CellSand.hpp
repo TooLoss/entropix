@@ -1,7 +1,5 @@
 #pragma once
-#include "cells/Cell.hpp"
+#include "cells/CellAbstractFall.hpp"
 
-class CellSand : public Cell {
-public:
-    virtual void update(Coord pos, World& world) const override;
+class CellSand : public CellAbstractFall {
 };
