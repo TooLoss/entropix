@@ -1,7 +1,7 @@
 #include "cells/CellAbstractFall.hpp"
 #include "core/World.hpp"
 
-void CellAbstractFall::update(Coord pos, World& world) const {
+void CellAbstractFall::fall(Coord pos, World& world) const {
     const Coord bleft(pos.x + 1, pos.y + 1);
     const Coord bcenter(pos.x, pos.y + 1); 
     const Coord bright(pos.x - 1, pos.y + 1); 

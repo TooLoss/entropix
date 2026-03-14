@@ -6,8 +6,8 @@ World::World(Coord size) : size(size), registry() {
 }
 
 void World::refresh() {
-    for (size_t i = size.x; i >= 0; i--) {
-        for (size_t j = size.y; j >= 0; j--) {
+    for (int i = size.x - 1; i >= 0; i--) {
+        for (int j = size.y - 1; j >= 0; j--) {
             Pixel pixel = this->get_pixel(Coord(i,j));
             const Cell& cell = registry.get(pixel.id);
             if (FRAME_BUFFER % cell.get_update_frame() == 0)

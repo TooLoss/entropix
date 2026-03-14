@@ -1,13 +1,10 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include "core/World.hpp"
-#include "render/TerminalRender.hpp"
+#include "render/SdlGridRenderer.hpp"
 
 int main(int argc, char *argv[]) {
     const Coord SIZE = {5, 5};
-
-    std::unique_ptr<World> world = std::make_unique<World>(SIZE);
-    std::unique_ptr<TerminalRender> render = std::make_unique<TerminalRender>(*world);
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
@@ -22,6 +19,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    std::unique_ptr<World> world = std::make_unique<World>(SIZE);
+    std::unique_ptr<SdlGridRenderer> grid_renderer = std::make_unique<SdlGridRenderer>(*world, renderer, window);
+
     bool running = true;
     while (running) {
         SDL_Event event;
@@ -31,12 +31,13 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255); // Dark background
+        SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
 
-        SDL_FRect rect = { 350, 250, 100, 100 };
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderFillRect(renderer, &rect);
+        Pixel sand = world->create_pixel_id(CellID::SAND);
+        world->set_pixel({1, 1}, sand);
+        world->set_pixel({2, 2}, sand);
+        grid_renderer->refresh_window();
 
         SDL_RenderPresent(renderer);
     }
