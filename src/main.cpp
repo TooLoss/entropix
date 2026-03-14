@@ -21,6 +21,8 @@ int main(int argc, char *argv[]) {
 
     std::unique_ptr<World> world = std::make_unique<World>(SIZE);
     std::unique_ptr<SdlGridRenderer> grid_renderer = std::make_unique<SdlGridRenderer>(*world, renderer, window);
+    Pixel sand = world->create_pixel_id(CellID::SAND);
+    world->set_pixel({4, 4}, sand);
 
     bool running = true;
     while (running) {
@@ -34,9 +36,6 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
 
-        Pixel sand = world->create_pixel_id(CellID::SAND);
-        world->set_pixel({1, 1}, sand);
-        world->set_pixel({2, 2}, sand);
         grid_renderer->refresh_window();
 
         SDL_RenderPresent(renderer);

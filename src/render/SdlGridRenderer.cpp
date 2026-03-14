@@ -14,7 +14,8 @@ void SdlGridRenderer::refresh_window() const {
         for (int j = size.y - 1; j >= 0; j--) {
             Pixel pixel = world.get_pixel(Coord(i,j));
             const Cell& cell = world.get_registry().get(pixel.id);
-            cell.render(Coord(i,j), cell_size, world, renderer);
+            Coord world_pos(i*cell_size, j*cell_size);
+            cell.render(world_pos, cell_size, world, renderer);
         }
     }
 }
