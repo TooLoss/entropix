@@ -26,8 +26,7 @@ public:
 
     virtual void update(Coord pos, World& world) const = 0;
 
-    virtual void render(Coord pos, uint8_t size, World &world,
-                        SDL_Renderer *render) const;
+    virtual void render(Coord pos, World &world, SDL_Renderer *renderer, const SDL_FRect *rect) const;
 
     uint8_t get_update_frame() const;
 };

@@ -7,15 +7,14 @@ uint8_t Cell::get_update_frame() const {
     return this->update_each_frame;
 }
 
-void Cell::render(Coord pos, uint8_t size, World &world,
-                  SDL_Renderer *render) const {
-    const SDL_Rect rectangle = { pos.x, pos.y, size, size };
-    SDL_SetRenderDrawColor(render,
+void Cell::render(Coord pos, World &world, SDL_Renderer *renderer, const SDL_FRect *rect) const {
+    Uint8 r, g, b, a;
+    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+    SDL_SetRenderDrawColor(renderer,
                            cell_color.r,
                            cell_color.g,
                            cell_color.b,
                            cell_color.a);
-    SDL_FRect f_rect;
-    SDL_RectToFRect(&rectangle, &f_rect);
-    SDL_RenderFillRect(render, &f_rect);
+    SDL_RenderFillRect(renderer, rect);
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
