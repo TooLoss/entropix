@@ -14,4 +14,4 @@ find_package(Threads REQUIRED)
 target_link_libraries(sand_lib PRIVATE Threads::Threads)
 
 add_executable(SandApp main.cpp)
-target_link_libraries(SandApp PRIVATE sand_lib)
+target_link_libraries(SandApp PRIVATE sand_lib SDL3::SDL3)
