@@ -6,11 +6,13 @@ World::World(Coord size) : size(size), registry() {
 }
 
 void World::refresh() {
-    for (Coord c : size.all_points()) {
-        Coord reversed(size.x - 1 - c.x, size.y - 1 - c.y);
-        Pixel current_pixel = grid[reversed.vector_to_index(size)];
-        const Cell& current_cell = registry.get(current_pixel.id);
-        current_cell.update(reversed, *this);
+    for (size_t i = size.x; i >= 0; i--) {
+        for (size_t j = size.y; j >= 0; j--) {
+            Pixel pixel = this->get_pixel(Coord(i,j));
+            const Cell& cell = registry.get(pixel.id);
+            if (FRAME_BUFFER % cell.get_update_frame() == 0)
+                cell.update(Coord(i,j), *this);
+        }
     }
 }
 

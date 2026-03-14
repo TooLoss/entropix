@@ -18,6 +18,7 @@ private:
     Coord size;
     std::vector<Pixel> grid;
     CellRegistry registry;
+    const uint8_t FRAME_BUFFER = 12;
 
 public:
     World(Coord size);

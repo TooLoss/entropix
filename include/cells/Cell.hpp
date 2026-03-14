@@ -13,9 +13,12 @@ enum class Mobility : uint8_t {
 class Cell {
 private:
     Mobility mobility = Mobility::STATIC;
+    uint8_t update_each_frame = 1;
 
 public:
     virtual ~Cell();
 
     virtual void update(Coord pos, World& world) const = 0;
+
+    uint8_t get_update_frame() const;
 };
