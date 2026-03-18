@@ -4,7 +4,7 @@
 #include "render/SdlGridRenderer.hpp"
 
 int main(int argc, char *argv[]) {
-    const Coord SIZE = {5, 5};
+    const Coord SIZE = {600, 600};
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<World> world = std::make_unique<World>(SIZE);
     std::unique_ptr<SdlGridRenderer> grid_renderer = std::make_unique<SdlGridRenderer>(*world, renderer, window);
     Pixel sand = world->create_pixel_id(CellID::SAND);
-    world->set_pixel({4, 4}, sand);
+    world->set_pixel({1, 1}, sand);
 
     bool running = true;
     while (running) {
