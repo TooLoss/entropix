@@ -1,12 +1,8 @@
 #pragma once
-#include "core/World.hpp"
-#include "render/SdlGridRenderer.hpp"
 #include "core/GameState.hpp"
 
 class Game {
 private:
-    std::shared_ptr<World> world;
-    std::unique_ptr<SdlGridRenderer> grid_renderer;
     std::unique_ptr<GameState> game_state;
     SDL_Renderer* renderer;
     SDL_Window* window;
@@ -17,4 +13,7 @@ public:
 
     void render();
     void update();
+    void init();
+
+    void set_game_state(std::unique_ptr<GameState> game_state);
 };

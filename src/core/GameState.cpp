@@ -1,4 +1,11 @@
 #include "core/GameState.hpp"
+#include "core/GameConst.hpp"
+
+GameState::~GameState() {}
+
+
+
+
 
 void GameState_Play::calculate_size() {
     Coord world_size = world->get_size();
@@ -24,6 +31,7 @@ void GameState_Play::create_grid() {
 }
 
 void GameState_Play::init() {
+    this->world = std::make_shared<World>(GameConst::GRID_SIZE);
     calculate_size();
     create_grid();
 }
@@ -40,4 +48,8 @@ void GameState_Play::render() {
         }
     }
     SDL_RenderPresent(renderer);
+}
+
+void GameState_Play::input() {
+
 }

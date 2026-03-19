@@ -2,13 +2,21 @@
 #include "core/GameConst.hpp"
 
 Game::Game(SDL_Renderer *renderer, SDL_Window *window)
-    : Game(GameConst::GRID_SIZE, renderer, window) {}
+: Game(GameConst::GRID_SIZE, renderer, window) {}
 
-Game::Game(Coord size, SDL_Renderer* renderer, SDL_Window* window) : renderer(renderer), window(window) {
-    this->world = std::make_shared<World>(size);
-    this->grid_renderer = std::make_unique<SdlGridRenderer>(*world, renderer, window);
+void Game::render() {
+    this->game_state->render();
 }
 
 void Game::update() {
-    this->world->refresh();
+    this->game_state->update();
+}
+
+void Game::init() {
+    this->game_state->init();
+}
+
+void Game::set_game_state(std::unique_ptr<GameState> game_state) {
+    this->game_state = std::move(game_state);
+    this->game_state->init();
 }

@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "core/World.hpp"
-#include "render/SdlGridRenderer.hpp"
+#include "core/Game.hpp"
+#include "core/GameConst.hpp"
 
 int main(int argc, char *argv[]) {
     const Coord SIZE = {600, 600};
@@ -19,10 +19,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::unique_ptr<World> world = std::make_unique<World>(SIZE);
-    std::unique_ptr<SdlGridRenderer> grid_renderer = std::make_unique<SdlGridRenderer>(*world, renderer, window);
-    Pixel sand = world->create_pixel_id(CellID::SAND);
-    world->set_pixel({1, 1}, sand);
+    Game game(renderer, window);
+
+    game.set_game_state(std::make_unique<GameState_Play>(renderer, window));
+
+    auto previous_time = SDL_GetTicks();
+    Uint64 delta_time = 0;
+    Uint64 frame_time = 0;
 
     bool running = true;
     while (running) {
@@ -33,10 +36,18 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        delta_time = previous_time - SDL_GetTicks();
+        frame_time += delta_time;
+
+        while (frame_time >= GameConst::GAME_TICK) {
+            game.update();
+            frame_time -= GameConst::GAME_TICK;
+        }
+
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
 
-        grid_renderer->refresh_window();
+        game.render();
 
         SDL_RenderPresent(renderer);
     }

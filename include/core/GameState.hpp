@@ -13,7 +13,10 @@ public:
     GameState(SDL_Renderer *renderer, SDL_Window *window)
     : renderer(renderer), window(window) {};
 
+    virtual ~GameState();
+
     virtual void render() = 0;
+    virtual void update() = 0;
     virtual void init() = 0;
     virtual void input() = 0;
 };
@@ -29,10 +32,11 @@ private:
     void calculate_size();
 
 public:
-    GameState_Play(SDL_Renderer *renderer, SDL_Window *window,
-                   std::shared_ptr<World> world)
-    : GameState(renderer, window), world(world) {};
+    GameState_Play(SDL_Renderer *renderer, SDL_Window *window)
+    : GameState(renderer, window) {}
 
     virtual void init() override;
+    virtual void update() override;
     virtual void render() override;
+    virtual void input() override;
 };
