@@ -1,18 +1,38 @@
 #pragma once
+
 #include <SDL3/SDL_render.h>
+#include <vector>
+#include "core/World.hpp"
 
 class GameState {
-private:
+protected:
     SDL_Renderer* renderer;
     SDL_Window* window;
 
 public:
-    GameState(SDL_Renderer* renderer, SDL_Window* window);
+    GameState(SDL_Renderer *renderer, SDL_Window *window)
+    : renderer(renderer), window(window) {};
 
-    virtual void render();
-    virtual void input();
+    virtual void render() = 0;
+    virtual void init() = 0;
+    virtual void input() = 0;
 };
 
-class GameState_Play : public GameState {
 
+
+class GameState_Play : public GameState {
+private:
+    uint8_t cell_size;
+    std::vector<SDL_FRect> render_grid;
+    std::shared_ptr<World> world;
+    void create_grid();
+    void calculate_size();
+
+public:
+    GameState_Play(SDL_Renderer *renderer, SDL_Window *window,
+                   std::shared_ptr<World> world)
+    : GameState(renderer, window), world(world) {};
+
+    virtual void init() override;
+    virtual void render() override;
 };
