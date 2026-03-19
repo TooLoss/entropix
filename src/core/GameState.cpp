@@ -59,7 +59,8 @@ void GameState_Play::input(SDL_Event* event) {
         Coord mouse_pos(mouse_x, mouse_y);
         Pixel pixel = world->VOID_PIXEL;
         pixel.id = CellID::SAND;
-        world->set_pixel(mouse_pos, pixel);
+        if (!world->is_out_of_range(mouse_pos) && world->is_empty(mouse_pos))
+            world->set_pixel(mouse_pos, pixel);
         SDL_Log("Pixel added position : %i, %i", mouse_x, mouse_y);
     }
 }
