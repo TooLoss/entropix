@@ -15,5 +15,5 @@ target_include_directories(sand_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 find_package(Threads REQUIRED)
 target_link_libraries(sand_lib PRIVATE Threads::Threads)
 
-add_executable(SandApp main.cpp)
-target_link_libraries(SandApp PRIVATE sand_lib SDL3::SDL3)
+add_executable(entropix main.cpp)
+target_link_libraries(entropix PRIVATE sand_lib SDL3::SDL3)
