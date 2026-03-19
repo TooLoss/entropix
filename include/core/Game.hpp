@@ -13,6 +13,7 @@ public:
     void render();
     void update();
     void init();
+    void input(SDL_Event* event);
 
     void set_game_state(std::unique_ptr<GameState> game_state);
 };

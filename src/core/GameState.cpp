@@ -1,5 +1,7 @@
+#include <SDL3/SDL_log.h>
 #include "core/GameState.hpp"
 #include "core/GameConst.hpp"
+#include "core/CellRegistry.hpp"
 
 GameState::~GameState() {}
 
@@ -50,8 +52,16 @@ void GameState_Play::render() {
     SDL_RenderPresent(renderer);
 }
 
-void GameState_Play::input() {
-
+void GameState_Play::input(SDL_Event* event) {
+    if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+        const int mouse_x = static_cast<int>(event->button.x / cell_size);
+        const int mouse_y = static_cast<int>(event->button.y / cell_size);
+        Coord mouse_pos(mouse_x, mouse_y);
+        Pixel pixel = world->VOID_PIXEL;
+        pixel.id = CellID::SAND;
+        world->set_pixel(mouse_pos, pixel);
+        SDL_Log("Pixel added position : %i, %i", mouse_x, mouse_y);
+    }
 }
 
 void GameState_Play::update() {

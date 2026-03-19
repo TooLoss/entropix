@@ -1,6 +1,6 @@
 #pragma once
-
 #include <SDL3/SDL_render.h>
+#include <SDL3/SDL_events.h>
 #include <vector>
 #include "core/World.hpp"
 
@@ -18,7 +18,7 @@ public:
     virtual void render() = 0;
     virtual void update() = 0;
     virtual void init() = 0;
-    virtual void input() = 0;
+    virtual void input(SDL_Event* event) = 0;
 };
 
 
@@ -38,5 +38,5 @@ public:
     virtual void init() override;
     virtual void update() override;
     virtual void render() override;
-    virtual void input() override;
+    virtual void input(SDL_Event* event) override;
 };

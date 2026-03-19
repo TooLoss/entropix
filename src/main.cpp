@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_EVENT_QUIT) {
                 running = false;
             }
+            game.input(&event);
         }
 
         delta_time = previous_time - SDL_GetTicks();
