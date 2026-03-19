@@ -33,7 +33,7 @@ private:
     void create_grid();
     void calculate_size();
 
-    void input_place(SDL_Event* event);
+    void input_place(SDL_Event* event, CellID id, bool force = false);
 
 public:
     GameState_Play(SDL_Renderer *renderer, SDL_Window *window)
