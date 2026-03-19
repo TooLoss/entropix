@@ -9,7 +9,6 @@ private:
 
 public:
     Game(SDL_Renderer* renderer, SDL_Window* window);
-    Game(Coord size, SDL_Renderer* renderer, SDL_Window* window);
 
     void render();
     void update();

@@ -53,3 +53,7 @@ void GameState_Play::render() {
 void GameState_Play::input() {
 
 }
+
+void GameState_Play::update() {
+    this->world->refresh();
+}

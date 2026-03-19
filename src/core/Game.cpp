@@ -2,7 +2,7 @@
 #include "core/GameConst.hpp"
 
 Game::Game(SDL_Renderer *renderer, SDL_Window *window)
-: Game(GameConst::GRID_SIZE, renderer, window) {}
+: renderer(renderer), window(window) {}
 
 void Game::render() {
     this->game_state->render();
