@@ -54,17 +54,25 @@ void GameState_Play::render() {
 
 void GameState_Play::input(SDL_Event* event) {
     if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-        const int mouse_x = static_cast<int>(event->button.x / cell_size);
-        const int mouse_y = static_cast<int>(event->button.y / cell_size);
-        Coord mouse_pos(mouse_x, mouse_y);
-        Pixel pixel = world->VOID_PIXEL;
-        pixel.id = CellID::SAND;
-        if (!world->is_out_of_range(mouse_pos) && world->is_empty(mouse_pos))
-            world->set_pixel(mouse_pos, pixel);
-        SDL_Log("Pixel added position : %i, %i", mouse_x, mouse_y);
+        this->input_place(event);
+    } else if (event->type == SDL_EVENT_KEY_DOWN) {
+        if(event->key.key == SDLK_SPACE)
+            paused = !paused;
     }
 }
 
+void GameState_Play::input_place(SDL_Event* event) {
+    const int mouse_x = static_cast<int>(event->button.x / cell_size);
+    const int mouse_y = static_cast<int>(event->button.y / cell_size);
+    Coord mouse_pos(mouse_x, mouse_y);
+    Pixel pixel = world->VOID_PIXEL;
+    pixel.id = CellID::SAND;
+    if (!world->is_out_of_range(mouse_pos) && world->is_empty(mouse_pos))
+        world->set_pixel(mouse_pos, pixel);
+    SDL_Log("Pixel added position : %i, %i", mouse_x, mouse_y);
+}
+
 void GameState_Play::update() {
-    this->world->refresh();
+    if (!paused)
+        this->world->refresh();
 }

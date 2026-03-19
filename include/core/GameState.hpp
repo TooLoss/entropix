@@ -28,8 +28,12 @@ private:
     uint8_t cell_size;
     std::vector<SDL_FRect> render_grid;
     std::shared_ptr<World> world;
+    bool paused{false};
+
     void create_grid();
     void calculate_size();
+
+    void input_place(SDL_Event* event);
 
 public:
     GameState_Play(SDL_Renderer *renderer, SDL_Window *window)
