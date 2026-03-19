@@ -3,7 +3,7 @@
 
 namespace GameConst {
 
-inline constexpr float GAME_TICK = 0.15f;
+inline constexpr int GAME_TICK = 33;
 
 inline const Coord GRID_SIZE(20, 20);
 

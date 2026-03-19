@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     game.set_game_state(std::make_unique<GameState_Play>(renderer, window));
 
     auto previous_time = SDL_GetTicks();
-    Uint64 delta_time = 0;
     Uint64 frame_time = 0;
 
     bool running = true;
@@ -37,7 +36,10 @@ int main(int argc, char *argv[]) {
             game.input(&event);
         }
 
-        delta_time = previous_time - SDL_GetTicks();
+        auto current_time = SDL_GetTicks();
+        Uint64 delta_time = current_time - previous_time;
+        previous_time = current_time;
+
         frame_time += delta_time;
 
         while (frame_time >= GameConst::GAME_TICK) {
@@ -47,9 +49,7 @@ int main(int argc, char *argv[]) {
 
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
-
         game.render();
-
         SDL_RenderPresent(renderer);
     }
 
