@@ -1,8 +1,9 @@
 add_library(sand_lib STATIC 
     core/World.cpp 
     core/CellRegistry.cpp
+    core/Game.cpp
+    core/GameState.cpp
     render/TerminalRender.cpp
-    render/SdlGridRenderer.cpp
     cells/Cell.cpp
     cells/CellVoid.cpp
     cells/CellSand.cpp
