@@ -8,17 +8,22 @@
 
 struct Pixel {
     CellID id;
+    bool lock_flipflop;
 };
 
 class World {
 public:
-    Pixel VOID_PIXEL = {(CellID)0};
+    Pixel VOID_PIXEL = {CellID::VOID, false};
 
 private:
     Coord size;
     std::vector<Pixel> grid;
     CellRegistry registry;
-    const uint8_t FRAME_BUFFER = 12;
+    static inline constexpr uint8_t FRAME_BUFFER{12};
+
+    bool locker_flipflop{false};
+
+    void update_position(Coord pos);
 
 public:
     World(Coord size);
@@ -70,6 +75,10 @@ public:
     * @param out Coord.
     */
     void swap(Coord in, Coord out);
+
+    void lock(Coord pos);
+
+    bool is_locked(Coord pos);
 
     Pixel create_pixel_id(CellID id) const;
 };

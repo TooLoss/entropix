@@ -7,9 +7,12 @@ void CellAbstractFall::fall(Coord pos, World& world) const {
     const Coord bright(pos.x - 1, pos.y + 1); 
     if (world.is_empty(bcenter)) {
         world.swap(pos, bcenter);
+        world.lock(bcenter);
     } else if (world.is_empty(bleft)) {
         world.swap(pos, bleft);
+        world.lock(bleft);
     } else if (world.is_empty(bright)) {
         world.swap(pos, bright);
+        world.lock(bright);
     }
 }
