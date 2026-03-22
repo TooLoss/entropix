@@ -1,8 +1,8 @@
 #pragma once
 
 struct Coord {
-    int x;
-    int y;
+    int x = 0;
+    int y = 0;
 
     Coord(int x, int y) : x(x), y(y) {};
 
