@@ -6,7 +6,7 @@
 GameState::~GameState() {}
 
 GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window)
-    : GameState(renderer, window), world(GameConst::GRID_SIZE) {}
+    : GameState(renderer, window), world(GameConst::GRID_SIZE), camera(world) {}
 
 void GameState_Play::calculate_size() {
     Coord world_size = world.get_size();

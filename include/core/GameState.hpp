@@ -3,6 +3,7 @@
 #include <SDL3/SDL_events.h>
 #include <vector>
 #include "core/World.hpp"
+#include "render/Camera.hpp"
 
 class GameState {
 protected:
@@ -28,6 +29,7 @@ private:
     uint8_t cell_size;
     std::vector<SDL_FRect> render_grid;
     World world;
+    Camera camera;
     bool paused{false};
 
     void create_grid();
