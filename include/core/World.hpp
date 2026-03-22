@@ -1,19 +1,17 @@
 #pragma once
 #include <vector>
 #include <span>
-#include <memory>
 #include "utils/Coord.hpp"
-#include "cells/Cell.hpp"
 #include "core/CellRegistry.hpp"
 
 struct Pixel {
-    CellID id;
-    bool lock_flipflop;
+    CellID id = CellID::VOID;
+    bool lock_flipflop = false;
 };
 
 class World {
 public:
-    Pixel VOID_PIXEL = {CellID::VOID, false};
+    Pixel VOID_PIXEL = {};
 
 private:
     Coord size;
