@@ -1,4 +1,5 @@
 #include <SDL3/SDL_log.h>
+#include <SDL3/SDL_mouse.h>
 #include "core/GameState.hpp"
 #include "core/GameConst.hpp"
 #include "core/CellRegistry.hpp"
@@ -25,10 +26,12 @@ void GameState_Play::input(SDL_Event* event) {
         if (event->key.key == SDLK_SPACE)
             paused = !paused;
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {
+        float mouse_x, mouse_y;
+        uint32_t buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
         if (event->wheel.y > 0) {
-            camera.zoom(1, Coord(0,0));
+            camera.zoom(1, mouse_x, mouse_y);
         } else if (event->wheel.y < 0) {
-            camera.zoom(-1, Coord(0,0));
+            camera.zoom(-1, mouse_x, mouse_y);
         }
     }
 }
