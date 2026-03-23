@@ -18,7 +18,7 @@ private:
 public:
     Camera(World& world, SDL_Window* window, SDL_Renderer* renderer);
 
-    Coord get_camera_size();
+    Coord get_size();
     void zoom(int speed, Coord mouse_pos);
     void render();
     uint8_t get_cell_size() const;

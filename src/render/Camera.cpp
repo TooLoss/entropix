@@ -8,7 +8,7 @@ Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer)
 
 void Camera::refresh_rectangles() {
     calculate_size();
-    Coord size = get_camera_size();
+    Coord size = this->get_size();
     render_grid.resize(size.x * size.y);
     for (int i = 0; i < size.x; i++) {
         for (int j = 0; j < size.y; j++) {
@@ -23,7 +23,7 @@ void Camera::refresh_rectangles() {
 }
 
 void Camera::calculate_size() {
-    Coord camera_size = get_camera_size();
+    Coord camera_size = this->get_size();
     int window_x, window_y;
     SDL_GetWindowSize(this->window, &window_x, &window_y);
     int size_x = (int)(window_x/camera_size.x);
@@ -40,7 +40,7 @@ Coord Camera::camera_to_world_position(Coord pos) const {
     return Coord(pos.x + corner_start.x, pos.y + corner_start.y);
 }
 
-Coord Camera::get_camera_size() {
+Coord Camera::get_size() {
     return Coord(
         corner_end.x - corner_start.x,
         corner_end.y - corner_start.y
@@ -56,7 +56,7 @@ void Camera::zoom(int speed, Coord mouse_pos) {
 }
 
 void Camera::render() {
-    Coord camera_size = get_camera_size();
+    Coord camera_size = this->get_size();
     Coord world_size = world.get_size();
     for (int i = 0; i < camera_size.x; i++) {
         for (int j = 0; j < camera_size.y; j++) {
