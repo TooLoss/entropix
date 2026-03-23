@@ -14,7 +14,7 @@ private:
     float offset_x, offset_y;
 
     void refresh_rectangles();
-    size_t calculate_size();
+    size_t calculate_size(Coord camera_size);
     Coord camera_to_screen_position(Coord pos) const;
     Coord camera_to_world_position(Coord pos) const;
     bool can_fit_cell(uint8_t new_size);

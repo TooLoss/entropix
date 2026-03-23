@@ -10,7 +10,7 @@ Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer)
 };
 
 void Camera::refresh_rectangles() {
-    cell_size = calculate_size();
+    cell_size = calculate_size(this->get_size());
     Coord size = this->get_size();
     render_grid.resize(size.x * size.y);
     for (int i = 0; i < size.x; i++) {
@@ -25,8 +25,7 @@ void Camera::refresh_rectangles() {
     }
 }
 
-size_t Camera::calculate_size() {
-    Coord camera_size = this->get_size();
+size_t Camera::calculate_size(Coord camera_size) {
     int window_x, window_y;
     SDL_GetWindowSize(this->window, &window_x, &window_y);
     int size_x = (int)(window_x/camera_size.x);
@@ -45,16 +44,9 @@ Coord Camera::camera_to_world_position(Coord pos) const {
 bool Camera::can_fit_cell(uint8_t new_size) {
     int win_x, win_y;
     SDL_GetWindowSize(this->window, &win_x, &win_y);
-
-    Coord world_size = world.get_size();
-    int n_cell = win_x > win_y ? world_size.y : world_size.x; 
-
-    int cells_per_x = world.get_size().x / new_size;
-    int cells_per_y = world.get_size().y / new_size;
-
-    int capacity = cells_per_x * cells_per_y;
-
-    return n_cell <= capacity;
+    float ratio_x = (float)win_x / new_size;
+    float ratio_y = (float)win_y / new_size;
+    return ratio_x > ratio_y ? win_y % new_size < new_size/4 : win_y % new_size < new_size/4;
 }
 
 Coord Camera::get_size() {
@@ -70,35 +62,44 @@ Coord Camera::get_center() {
 }
 
 void Camera::zoom(int speed, float mouse_pos_x, float mouse_pos_y) {
-    int win_w, win_h;
-    SDL_GetWindowSize(this->window, &win_w, &win_h);
+    int win_x, win_y;
+    SDL_GetWindowSize(this->window, &win_x, &win_y);
 
-    float mouse_ratio_x = mouse_pos_x / (float)win_w;
-    float mouse_ratio_y = mouse_pos_y / (float)win_h;
+    float mouse_ratio_x = mouse_pos_x / (float)win_x;
+    float mouse_ratio_y = mouse_pos_y / (float)win_y;
 
-    float current_w = zoom_end_x - zoom_start_x;
-    float current_h = zoom_end_y - zoom_start_y;
+    float current_x = zoom_end_x - zoom_start_x;
+    float current_y = zoom_end_y - zoom_start_y;
 
-    float zoom_step_w = current_w * 0.1f * (float)speed;
-    float zoom_step_h = current_h * 0.1f * (float)speed;
+    float zoom_step_x = current_x * 0.1f * (float)speed;
+    float zoom_step_y = current_y * 0.1f * (float)speed;
 
-    zoom_start_x += zoom_step_w * mouse_ratio_x;
-    zoom_end_x   -= zoom_step_w * (1.0f - mouse_ratio_x);
+    zoom_start_x += zoom_step_x * mouse_ratio_x;
+    zoom_end_x -= zoom_step_x * (1.0f - mouse_ratio_x);
 
-    zoom_start_y += zoom_step_h * mouse_ratio_y;
-    zoom_end_y   -= zoom_step_h * (1.0f - mouse_ratio_y);
+    zoom_start_y += zoom_step_y * mouse_ratio_y;
+    zoom_end_y -= zoom_step_y * (1.0f - mouse_ratio_y);
 
     Coord world_size = world.get_size();
-    
-    if (zoom_start_x < 0) zoom_start_x = 0;
-    if (zoom_start_y < 0) zoom_start_y = 0;
-    if (zoom_end_x > world_size.x) zoom_end_x = world_size.x;
-    if (zoom_end_y > world_size.y) zoom_end_y = world_size.y;
 
-    corner_start = Coord(zoom_start_x, zoom_start_y);
-    corner_end = Coord(zoom_end_x, zoom_end_y);
+    if (zoom_start_x < 0)
+        zoom_start_x = 0;
+    if (zoom_start_y < 0)
+        zoom_start_y = 0;
+    if (zoom_end_x > world_size.x)
+        zoom_end_x = world_size.x;
+    if (zoom_end_y > world_size.y)
+        zoom_end_y = world_size.y;
 
-    this->refresh_rectangles();
+    Coord camera_size(zoom_end_x - zoom_start_x, zoom_end_y - zoom_start_y);
+    size_t new_cell_size = calculate_size(camera_size);
+    if (can_fit_cell(new_cell_size)) {
+        corner_start = Coord(zoom_start_x, zoom_start_y);
+        corner_end = Coord(zoom_end_x, zoom_end_y);
+        this->refresh_rectangles();
+    }
+    SDL_LogDebug(SDL_LOG_CATEGORY_RENDER, "[DEBUG] new cell size : %i",
+                 unsigned(new_cell_size));
 }
 
 void Camera::render() {
