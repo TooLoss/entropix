@@ -1,9 +1,12 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <SDL3/SDL_log.h>
 #include "core/Game.hpp"
 #include "core/GameConst.hpp"
 
 int main(int argc, char *argv[]) {
+    SDL_SetLogPriority(SDL_LOG_CATEGORY_RENDER, SDL_LOG_PRIORITY_DEBUG);
+
     const Coord SIZE = {600, 600};
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {

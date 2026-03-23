@@ -6,7 +6,7 @@
 GameState::~GameState() {}
 
 GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window)
-    : GameState(renderer, window), world(GameConst::GRID_SIZE), camera(world) {}
+    : GameState(renderer, window), world(GameConst::GRID_SIZE), camera(world, window, renderer) {}
 
 void GameState_Play::init() {
 }
