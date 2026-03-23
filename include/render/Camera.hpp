@@ -17,7 +17,9 @@ public:
     Camera(World& world);
 
     Coord get_camera_size();
-    void zoom(Coord center);
+    void zoom(int speed, Coord mouse_pos);
     void render();
+    uint8_t get_cell_size() const;
+    Coord get_camera_position() const;
 
 };

@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_events.h>
-#include <vector>
 #include "core/World.hpp"
 #include "render/Camera.hpp"
 
@@ -26,14 +25,9 @@ public:
 
 class GameState_Play : public GameState {
 private:
-    uint8_t cell_size;
-    std::vector<SDL_FRect> render_grid;
     World world;
     Camera camera;
     bool paused{false};
-
-    void create_grid();
-    void calculate_size();
 
     void input_place(SDL_Event* event, CellID id, bool force = false);
 
