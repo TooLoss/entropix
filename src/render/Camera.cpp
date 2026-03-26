@@ -1,6 +1,7 @@
 #include <SDL3/SDL_log.h>
 #include <algorithm>
 #include "render/Camera.hpp"
+#include "core/GameConst.hpp"
 
 Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer) :
     world(world),
@@ -58,6 +59,22 @@ void Camera::render() {
         }
     }
     SDL_RenderPresent(renderer);
+}
+
+void Camera::zoom(int speed, float mouse_pos_x, float mouse_pos_y) {
+    // Zoom
+    cell_size += speed;
+
+    // Move center toward mouse position
+    // Coord camera_center((camera_size.x / 2) * cell_size,
+    //                     (camera_size.y / 2) * cell_size);
+    // Vector2<float> lerp_vector(mouse_pos_x - camera_center.x,
+    //                            mouse_pos_y - camera_center.y);
+    // center = Coord(center.x + lerp_vector.x * GameConst::ZOOM_FOCUS_FACTOR,
+    //                center.y + lerp_vector.y * GameConst::ZOOM_FOCUS_FACTOR);
+
+    // Draw new canvas
+    draw_canvas();
 }
 
 size_t Camera::get_cell_size() {

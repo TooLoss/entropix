@@ -28,11 +28,11 @@ void GameState_Play::input(SDL_Event* event) {
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {
         float mouse_x, mouse_y;
         uint32_t buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
-        // if (event->wheel.y > 0) {
-        //     camera.zoom(1, mouse_x, mouse_y);
-        // } else if (event->wheel.y < 0) {
-        //     camera.zoom(-1, mouse_x, mouse_y);
-        // }
+        if (event->wheel.y > 0) {
+            camera.zoom(1, mouse_x, mouse_y);
+        } else if (event->wheel.y < 0) {
+            camera.zoom(-1, mouse_x, mouse_y);
+        }
     }
 }
 

@@ -17,9 +17,9 @@ public:
 
     Coord camera_to_world_pos(Coord pos);
 
-    void add_zoom(int speed, float mouse_pos_x, float mouse_pos_y);
     void draw_canvas();
     void render();
+    void zoom(int speed, float mouse_pos_x, float mouse_pos_y);
 
     size_t get_cell_size();
 };
