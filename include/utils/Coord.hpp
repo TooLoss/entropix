@@ -1,24 +1,25 @@
 #pragma once
+#include <stddef.h>
 
-template <typename T = int>
-struct Coord {
+template <typename T>
+struct Vector2 {
     T x = 0;
     T y = 0;
 
-    Coord(T x, T y) : x(x), y(y) {};
+    Vector2(T x, T y) : x(x), y(y) {};
 
-    Coord& operator+(const Coord& i) { x += i.x; y += i.y; return *this; }
+    Vector2& operator+(const Vector2& i) { x += i.x; y += i.y; return *this; }
     bool operator>=(T i) const { return (this->x >= i) && (this->y >= i); }
     bool operator>(T i) const { return (this->x > i) && (this->y > i); }
     bool operator==(T i) const { return (this->x == i) && (this->y == i); }
-    bool operator==(const Coord& i) const { return (this->x == i.x) && (this->y == i.y); }
-    bool operator!=(const Coord& other) const { return !(*this == other); }
-    Coord operator*(T i) const { return Coord(this->x * i, this->y * i); }
+    bool operator==(const Vector2& i) const { return (this->x == i.x) && (this->y == i.y); }
+    bool operator!=(const Vector2& other) const { return !(*this == other); }
+    Vector2 operator*(T i) const { return Vector2(this->x * i, this->y * i); }
 
     struct Iterator {
         T curX, curY, width;
 
-        Coord operator*() const { return Coord(curX, curY); }
+        Vector2 operator*() const { return Vector2(curX, curY); }
 
         Iterator& operator++() {
             curX++;
@@ -43,5 +44,7 @@ struct Coord {
 
     Range all_points() const { return Range{x, y}; }
 
-    T vector_to_index(Coord size) const { return size.x * y + x; }
+    T vector_to_index(Vector2 size) const { return size.x * y + x; }
 };
+
+using Coord = Vector2<size_t>;
