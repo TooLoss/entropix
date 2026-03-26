@@ -8,7 +8,7 @@ struct Vector2 {
 
     Vector2(T x, T y) : x(x), y(y) {};
 
-    Vector2 operator+(const Vector2 &other) const { return Vector2(this->x + other.x, this->y + other.y); }
+    Vector2 operator+(const Vector2& other) const { return Vector2(x + other.x, y + other.y); }
     Vector2& operator+=(const Vector2& other) { x += other.x; y += other.y; return *this; }
     bool operator>=(T i) const { return (this->x >= i) && (this->y >= i); }
     bool operator>(T i) const { return (this->x > i) && (this->y > i); }
