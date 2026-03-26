@@ -9,13 +9,17 @@ private:
     SDL_Renderer* renderer;
     SDL_Window* window;
 
-    Vector2<float> center;
-    float zoom;
+    Coord center;
+    Coord camera_size;
 
 public:
     Camera(World& world, SDL_Window* window, SDL_Renderer* renderer);
 
+    Coord camera_to_world_pos(Coord pos);
+
     void add_zoom(int speed, float mouse_pos_x, float mouse_pos_y);
     void draw_canvas();
     void render();
+
+    size_t get_cell_size();
 };

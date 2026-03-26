@@ -8,13 +8,15 @@ struct Vector2 {
 
     Vector2(T x, T y) : x(x), y(y) {};
 
-    Vector2& operator+(const Vector2& i) { x += i.x; y += i.y; return *this; }
+    Vector2 operator+(const Vector2 &other) const { return Vector2(this->x + other.x, this->y + other.y); }
+    Vector2& operator+=(const Vector2& other) { x += other.x; y += other.y; return *this; }
     bool operator>=(T i) const { return (this->x >= i) && (this->y >= i); }
     bool operator>(T i) const { return (this->x > i) && (this->y > i); }
     bool operator==(T i) const { return (this->x == i) && (this->y == i); }
     bool operator==(const Vector2& i) const { return (this->x == i.x) && (this->y == i.y); }
     bool operator!=(const Vector2& other) const { return !(*this == other); }
     Vector2 operator*(T i) const { return Vector2(this->x * i, this->y * i); }
+    Vector2 operator+(Vector2& i) const { return Vector2(this->x * i, this->y * i); }
 
     struct Iterator {
         T curX, curY, width;
