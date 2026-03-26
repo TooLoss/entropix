@@ -6,9 +6,9 @@ Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer) :
     world(world),
     window(window),
     renderer(renderer),
-    cell_size(10),
-    center(static_cast<float>(world.get_size().x / 2.f),
-           static_cast<float>(world.get_size().y / 2.f)),
+    cell_size(100),
+    center(static_cast<size_t>(world.get_size().x / 2.f),
+           static_cast<size_t>(world.get_size().y / 2.f)),
     camera_size(0,0)
 {
     draw_canvas();
@@ -23,17 +23,18 @@ void Camera::draw_canvas() {
     float margin_x = (window_x % cell_size) / 2.f;
     float margin_y = (window_y % cell_size) / 2.f;
 
-    size_t count_x = window_x / cell_size;
-    size_t count_y = window_y / cell_size;
+    size_t count_x = (window_x / cell_size) + 2;
+    size_t count_y = (window_y / cell_size) + 2;
 
     camera_size = Coord(count_x, count_y);
 
+    render_grid.resize(count_x * count_y);
     for (size_t i = 0; i < count_x; i++) {
         for (size_t j = 0; j < count_y; j++) {
             float pos_x = i * cell_size;
             float pos_y = j * cell_size;
-            float show_size_x = j == 0 || j == count_y ? margin_x : cell_size;
-            float show_size_y = i == 0 || i == count_x ? margin_y : cell_size;
+            float show_size_x = j == 0 || j == count_y - 1 ? margin_x : cell_size;
+            float show_size_y = i == 0 || i == count_x - 1 ? margin_y : cell_size;
             SDL_FRect rect = { pos_x, pos_y, show_size_x, show_size_y };
             render_grid[Coord(i,j).vector_to_index(camera_size)] = rect;
         }
@@ -41,13 +42,12 @@ void Camera::draw_canvas() {
 }
 
 Coord Camera::camera_to_world_pos(Coord pos) {
-    size_t x = static_cast<size_t>(center.x + pos.x - (camera_size.x / 2));
-    size_t y = static_cast<size_t>(center.y + pos.y - (camera_size.y / 2));
+    size_t x = static_cast<size_t>(center.x / cell_size + pos.x - (camera_size.x / 2));
+    size_t y = static_cast<size_t>(center.y / cell_size + pos.y - (camera_size.y / 2));
     return Coord(x, y);
 }
 
 void Camera::render() {
-    Coord world_size = world.get_size();
     for (int i = 0; i < camera_size.x; i++) {
         for (int j = 0; j < camera_size.y; j++) {
             Coord camera_pos(i, j);
