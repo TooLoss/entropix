@@ -41,8 +41,9 @@ void Camera::draw_canvas() {
 }
 
 Coord Camera::camera_to_world_pos(Coord pos) {
-    Coord relative_center(camera_size.x / 2, camera_size.y / 2);
-    return center + pos + relative_center * -1;
+    size_t x = static_cast<size_t>(center.x + pos.x - (camera_size.x / 2));
+    size_t y = static_cast<size_t>(center.y + pos.y - (camera_size.y / 2));
+    return Coord(x, y);
 }
 
 void Camera::render() {
