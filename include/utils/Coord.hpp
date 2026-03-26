@@ -1,21 +1,22 @@
 #pragma once
 
+template <typename T = int>
 struct Coord {
-    int x = 0;
-    int y = 0;
+    T x = 0;
+    T y = 0;
 
-    Coord(int x, int y) : x(x), y(y) {};
+    Coord(T x, T y) : x(x), y(y) {};
 
     Coord& operator+(const Coord& i) { x += i.x; y += i.y; return *this; }
-    bool operator>=(int i) const { return (this->x >= i) && (this->y >= i); }
-    bool operator>(int i) const { return (this->x > i) && (this->y > i); }
-    bool operator==(int i) const { return (this->x == i) && (this->y == i); }
+    bool operator>=(T i) const { return (this->x >= i) && (this->y >= i); }
+    bool operator>(T i) const { return (this->x > i) && (this->y > i); }
+    bool operator==(T i) const { return (this->x == i) && (this->y == i); }
     bool operator==(const Coord& i) const { return (this->x == i.x) && (this->y == i.y); }
     bool operator!=(const Coord& other) const { return !(*this == other); }
-    Coord operator*(int i) const { return Coord(this->x * i, this->y * i); }
+    Coord operator*(T i) const { return Coord(this->x * i, this->y * i); }
 
     struct Iterator {
-        int curX, curY, width;
+        T curX, curY, width;
 
         Coord operator*() const { return Coord(curX, curY); }
 
@@ -35,12 +36,12 @@ struct Coord {
     };
 
     struct Range {
-        int w, h;
-        Iterator begin() const { return Iterator{0, 0, w}; }
-        Iterator end() const { return Iterator{0, h, w}; }
+        T x, y;
+        Iterator begin() const { return Iterator{0, 0, x}; }
+        Iterator end() const { return Iterator{0, y, x}; }
     };
 
     Range all_points() const { return Range{x, y}; }
 
-    int vector_to_index(Coord size) const { return size.x * y + x; }
+    T vector_to_index(Coord size) const { return size.x * y + x; }
 };
