@@ -3,5 +3,7 @@
 
 class BehaviorLiquid {
 public:
-    void fall(Coord pos, World& world) const;
+    bool fall(Coord pos, World& world) const;
+
+    bool liquid(Coord pos, World& world) const;
 };

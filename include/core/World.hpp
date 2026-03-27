@@ -72,7 +72,7 @@ public:
     * @param in Coord.
     * @param out Coord.
     */
-    void swap(Coord in, Coord out);
+    void swap(Coord in, Coord out, bool lock_out = false);
 
     void lock(Coord pos);
 

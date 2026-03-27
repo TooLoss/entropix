@@ -59,7 +59,7 @@ Coord World::get_size() const {
     return size;
 }
 
-void World::swap(Coord in, Coord out) {
+void World::swap(Coord in, Coord out, bool lock_out) {
     if (is_out_of_range(in) || is_out_of_range(out)) {
         throw std::out_of_range("Coordinate get_pixel is out of range.");
     }
@@ -67,6 +67,8 @@ void World::swap(Coord in, Coord out) {
     Pixel p_out = this->get_pixel(out);
     this->set_pixel(out, p_in);
     this->set_pixel(in, p_out);
+    if (lock_out)
+        this->lock(out);
 }
 
 bool World::is_out_of_range(Coord pos) const {
