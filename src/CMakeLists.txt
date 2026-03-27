@@ -8,7 +8,7 @@ add_library(sand_lib STATIC
     cells/Cell.cpp
     cells/CellVoid.cpp
     cells/CellSand.cpp
-    cells/CellAbstractFall.cpp
+    cells/BehaviorLiquid.cpp
 )
 
 target_include_directories(sand_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)

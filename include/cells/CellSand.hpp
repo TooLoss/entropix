@@ -1,7 +1,7 @@
 #pragma once
-#include "cells/CellAbstractFall.hpp"
+#include "cells/BehaviorFall.hpp"
 
-class CellSand : public Cell, CellAbstractFall {
+class CellSand : public Cell, BehaviorLiquid {
 public:
     CellSand() : Cell({ 247, 179, 20, 255 }) {};
 
