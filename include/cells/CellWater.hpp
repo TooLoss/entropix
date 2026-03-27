@@ -1,9 +1,9 @@
 #pragma once
 #include "cells/BehaviorLiquid.hpp"
 
-class CellSand : public Cell, BehaviorLiquid {
+class CellWater : public Cell, BehaviorLiquid {
 public:
-    CellSand() : Cell({ 247, 179, 20, 255 }) {};
+    CellWater() : CellWater({ 78, 113, 252, 255 }) {};
 
     virtual void update(Coord pos, World& world) const override;
-};
+}
