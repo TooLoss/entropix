@@ -40,8 +40,9 @@ void GameState_Play::input(SDL_Event* event) {
 
 void GameState_Play::input_place(SDL_Event* event, CellID id, bool force) {
     uint8_t cell_size = camera.get_cell_size();
-    const int mouse_x = static_cast<int>(event->button.x / cell_size);
-    const int mouse_y = static_cast<int>(event->button.y / cell_size);
+    Coord m = camera.get_margin();
+    const int mouse_x = static_cast<int>((event->button.x + m.x) / cell_size);
+    const int mouse_y = static_cast<int>((event->button.y + m.y) / cell_size);
     Coord mouse_world_pos = camera.camera_to_world_pos(Coord(mouse_x, mouse_y));
     Pixel pixel;
     pixel.id = id;

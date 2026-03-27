@@ -11,11 +11,13 @@ private:
 
     Coord center;
     Coord camera_size;
+    Coord margins;
 
 public:
     Camera(World& world, SDL_Window* window, SDL_Renderer* renderer);
 
     Coord camera_to_world_pos(Coord pos);
+    Coord get_margin();
 
     void draw_canvas();
     void render();
