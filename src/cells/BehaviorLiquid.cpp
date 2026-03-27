@@ -6,16 +6,16 @@ bool BehaviorLiquid::fall(Coord pos, World& world) const {
     const Coord bleft(pos.x + 1, pos.y + 1);
     const Coord bcenter(pos.x, pos.y + 1); 
     const Coord bright(pos.x - 1, pos.y + 1); 
-    const bool lock_cell = true
+    const bool lock_cell = true;
     if (world.is_empty(bcenter)) {
         world.swap(pos, bcenter, lock_cell);
         moved = true;
     } else if (world.is_empty(bleft)) {
-        world.swap(pos, bleft; lock_cell);
+        world.swap(pos, bleft, lock_cell);
         moved = true;
     } else if (world.is_empty(bright)) {
         world.swap(pos, bright, lock_cell);
-        moved = true
+        moved = true;
     }
     return moved;
 }
