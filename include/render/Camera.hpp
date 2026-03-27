@@ -9,7 +9,7 @@ private:
     SDL_Renderer* renderer;
     SDL_Window* window;
 
-    Coord center;
+    Coord origin;
     Coord camera_size;
     Coord margins;
 

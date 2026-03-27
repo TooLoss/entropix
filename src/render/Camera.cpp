@@ -8,7 +8,7 @@ Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer) :
     window(window),
     renderer(renderer),
     cell_size(99),
-    center(0, 0),
+    origin(0, 0),
     margins(0, 0),
     camera_size(0,0)
 {
@@ -47,7 +47,7 @@ void Camera::draw_canvas() {
 }
 
 Coord Camera::camera_to_world_pos(Coord pos) {
-    return Coord(center.x + pos.x, center.y + pos.y);
+    return Coord(origin.x + pos.x, origin.y + pos.y);
 }
 
 Coord Camera::get_margin() {
@@ -74,13 +74,13 @@ void Camera::zoom(int speed, float mouse_pos_x, float mouse_pos_y) {
     // Zoom
     cell_size += speed;
 
-    // Move center toward mouse position
-    // Coord camera_center((camera_size.x / 2) * cell_size,
+    // Move origin toward mouse position
+    // Coord camera_origin((camera_size.x / 2) * cell_size,
     //                     (camera_size.y / 2) * cell_size);
-    // Vector2<float> lerp_vector(mouse_pos_x - camera_center.x,
-    //                            mouse_pos_y - camera_center.y);
-    // center = Coord(center.x + lerp_vector.x * GameConst::ZOOM_FOCUS_FACTOR,
-    //                center.y + lerp_vector.y * GameConst::ZOOM_FOCUS_FACTOR);
+    // Vector2<float> lerp_vector(mouse_pos_x - camera_origin.x,
+    //                            mouse_pos_y - camera_origin.y);
+    // origin = Coord(origin.x + lerp_vector.x * GameConst::ZOOM_FOCUS_FACTOR,
+    //                origin.y + lerp_vector.y * GameConst::ZOOM_FOCUS_FACTOR);
 
     // Draw new canvas
     draw_canvas();
