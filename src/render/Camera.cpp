@@ -50,10 +50,6 @@ Coord Camera::camera_to_world_pos(Coord pos) {
     return Coord(origin.x + pos.x, origin.y + pos.y);
 }
 
-Coord Camera::get_margin() {
-    return Coord(cell_size) - margins;
-}
-
 void Camera::render() {
     for (int i = 0; i < camera_size.x; i++) {
         for (int j = 0; j < camera_size.y; j++) {
@@ -70,9 +66,10 @@ void Camera::render() {
     SDL_RenderPresent(renderer);
 }
 
-void Camera::zoom(int speed, float mouse_pos_x, float mouse_pos_y) {
+void Camera::zoom(int grow, Vector2<float> mouse_pos) {
     // Zoom
-    cell_size += speed;
+    cell_size += grow;
+    if (cell_size < 5) cell_size = 5;
 
     // Move origin toward mouse position
     // Coord camera_origin((camera_size.x / 2) * cell_size,
@@ -84,6 +81,10 @@ void Camera::zoom(int speed, float mouse_pos_x, float mouse_pos_y) {
 
     // Draw new canvas
     draw_canvas();
+}
+
+Coord Camera::get_margin() {
+    return Coord(cell_size) - margins;
 }
 
 size_t Camera::get_cell_size() {

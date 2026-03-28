@@ -35,7 +35,6 @@ void InputManager::handle_event(const SDL_Event& event, InputType type) {
 }
 
 void InputManager::execute(ActionID id) {
-    SDL_Log("Executed");
     size_t index = static_cast<size_t>(id);
     if (actions[index])
         actions[index]();

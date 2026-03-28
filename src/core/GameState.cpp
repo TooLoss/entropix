@@ -51,14 +51,14 @@ void GameState_Play::input(SDL_Event* event) {
         else if (event->button.button == SDL_BUTTON_RIGHT)
             this->input_place(event, CellID::VOID, true);
     } else if (event->type == SDL_EVENT_KEY_DOWN) {
-        input_manager.handle_event(*event, InputType::Keyboard);
+        this->input_manager.handle_event(*event, InputType::Keyboard);
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {
         float mouse_x, mouse_y;
         uint32_t buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
         if (event->wheel.y > 0) {
-            camera.zoom(1, mouse_x, mouse_y);
+            camera.zoom(1, Vector2<float>(0));
         } else if (event->wheel.y < 0) {
-            camera.zoom(-1, mouse_x, mouse_y);
+            camera.zoom(-1, Vector2<float>(0));
         }
     }
 }
