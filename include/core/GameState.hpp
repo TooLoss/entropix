@@ -2,6 +2,7 @@
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_events.h>
 #include "core/World.hpp"
+#include "core/InputManager.hpp"
 #include "render/Camera.hpp"
 
 class GameState {
@@ -28,8 +29,14 @@ private:
     World world;
     Camera camera;
     bool paused{false};
+    InputManager input_manager;
 
+    void bind_input_manager();
     void input_place(SDL_Event* event, CellID id, bool force = false);
+
+    // Events
+    
+    void toogle_pause();
 
 public:
     GameState_Play(SDL_Renderer *renderer, SDL_Window *window);

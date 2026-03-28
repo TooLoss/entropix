@@ -9,7 +9,33 @@ GameState::~GameState() {}
 GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window) :
     GameState(renderer, window),
     world(GameConst::GRID_SIZE),
-    camera(world, window, renderer) {}
+    camera(world, window, renderer)
+{
+    bind_input_manager();    
+}
+
+void GameState_Play::bind_input_manager() {
+    input_manager.bind(SDLK_SPACE, ActionID::Pause, InputType::Keyboard,
+                       [this]() { this->toogle_pause(); });
+}
+
+void GameState_Play::toogle_pause() {
+    paused = !paused;
+}
+
+void GameState_Play::input_place(SDL_Event* event, CellID id, bool force) {
+    uint8_t cell_size = camera.get_cell_size();
+    Coord m = camera.get_margin();
+    const int mouse_x = static_cast<int>((event->button.x + m.x) / cell_size);
+    const int mouse_y = static_cast<int>((event->button.y + m.y) / cell_size);
+    Coord mouse_world_pos = camera.camera_to_world_pos(Coord(mouse_x, mouse_y));
+    Pixel pixel;
+    pixel.id = id;
+    if (!world.is_out_of_range(mouse_world_pos) &&
+        (force || world.is_empty(mouse_world_pos)))
+        world.set_pixel(mouse_world_pos, pixel);
+    SDL_Log("Pixel added position : %i, %i", mouse_x, mouse_y);
+}
 
 void GameState_Play::init() {
 }
@@ -25,8 +51,7 @@ void GameState_Play::input(SDL_Event* event) {
         else if (event->button.button == SDL_BUTTON_RIGHT)
             this->input_place(event, CellID::VOID, true);
     } else if (event->type == SDL_EVENT_KEY_DOWN) {
-        if (event->key.key == SDLK_SPACE)
-            paused = !paused;
+        input_manager.handle_event(*event, InputType::Keyboard);
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {
         float mouse_x, mouse_y;
         uint32_t buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -36,20 +61,6 @@ void GameState_Play::input(SDL_Event* event) {
             camera.zoom(-1, mouse_x, mouse_y);
         }
     }
-}
-
-void GameState_Play::input_place(SDL_Event* event, CellID id, bool force) {
-    uint8_t cell_size = camera.get_cell_size();
-    Coord m = camera.get_margin();
-    const int mouse_x = static_cast<int>((event->button.x + m.x) / cell_size);
-    const int mouse_y = static_cast<int>((event->button.y + m.y) / cell_size);
-    Coord mouse_world_pos = camera.camera_to_world_pos(Coord(mouse_x, mouse_y));
-    Pixel pixel;
-    pixel.id = id;
-    if (!world.is_out_of_range(mouse_world_pos) &&
-        (force || world.is_empty(mouse_world_pos)))
-        world.set_pixel(mouse_world_pos, pixel);
-    SDL_Log("Pixel added position : %i, %i", mouse_x, mouse_y);
 }
 
 void GameState_Play::update() {

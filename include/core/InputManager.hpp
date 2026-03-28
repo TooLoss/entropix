@@ -19,6 +19,7 @@ enum class InputType { Keyboard, MouseButton, MouseWheel };
 
 enum class ActionID : uint8_t {
     None,
+    Pause,
     ZoomIn,
     ZoomOut,
     Place,
@@ -33,13 +34,15 @@ static constexpr size_t ACTION_COUNT = static_cast<size_t>(ActionID::Count);
 class InputManager {
 private:
     std::array<Command, static_cast<size_t>(ActionID::Count)> actions;
-    std::array<SDL_EventType, static_cast<size_t>(ActionID::Count)> keyboard_input;
+    std::array<SDL_Keycode, static_cast<size_t>(ActionID::Count)> keyboard_input;
+
+    void handle_keyboard_event(const SDL_Event& event);
 
 public:
     InputManager();
 
     void bind(size_t key, ActionID id, InputType type, Command func);
     void rebind(size_t new_key, ActionID id, InputType type);
-    void handle_event(const SDL_Event& event);
+    void handle_event(const SDL_Event& event, InputType type);
     void execute(ActionID id);
 };

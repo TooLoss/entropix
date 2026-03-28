@@ -3,6 +3,7 @@ add_library(sand_lib STATIC
     core/CellRegistry.cpp
     core/Game.cpp
     core/GameState.cpp
+    core/InputManager.cpp
     render/Camera.cpp
     render/TerminalRender.cpp
     cells/Cell.cpp
