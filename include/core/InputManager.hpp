@@ -24,6 +24,10 @@ enum class ActionID : uint8_t {
     ZoomOut,
     Place,
     Erase,
+    MoveUp,
+    MoveDown,
+    MoveLeft,
+    MoveRight,
     Count 
 };
 

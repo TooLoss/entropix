@@ -19,7 +19,7 @@ private:
     /** Margin of non-squared FRect. */
     Coord margins;
 
-    /** Init the render_grid vector, margins and size. */
+    /** Init the render_grid canvas, margins and size. */
     void draw_canvas();
 
 public:
@@ -34,11 +34,13 @@ public:
     /** Render the grid with the cell data contained in world. */
     void render();
 
-    /** Zoom function.
+    /** Zoom function. Operation will redraw canvas.
     * @param grow int unit in wich the cell_size grow.
     * @param mouse_pos Vector2<float> screen mouse position (x,y).
     */
     void zoom(int grow, Vector2<float> mouse_pos);
+
+    void translate(int dx, int dy);
 
     /** Get the margin.
      * @return Coord margin x and y.

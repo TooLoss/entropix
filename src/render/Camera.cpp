@@ -83,6 +83,11 @@ void Camera::zoom(int grow, Vector2<float> mouse_pos) {
     draw_canvas();
 }
 
+void Camera::translate(int dx, int dy) {
+    origin = Coord(origin.x + dx, origin.y + dy);
+    draw_canvas();
+}
+
 Coord Camera::get_margin() {
     return Coord(cell_size) - margins;
 }

@@ -17,6 +17,14 @@ GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window) :
 void GameState_Play::bind_input_manager() {
     input_manager.bind(SDLK_SPACE, ActionID::Pause, InputType::Keyboard,
                        [this]() { this->toogle_pause(); });
+    input_manager.bind(SDLK_UP, ActionID::MoveUp, InputType::Keyboard,
+                       [this]() { this->camera.translate(0, -1); });
+    input_manager.bind(SDLK_DOWN, ActionID::MoveDown, InputType::Keyboard,
+                       [this]() { this->camera.translate(0, 1); });
+    input_manager.bind(SDLK_RIGHT, ActionID::MoveRight, InputType::Keyboard,
+                       [this]() { this->camera.translate(1, 0); });
+    input_manager.bind(SDLK_LEFT, ActionID::MoveLeft, InputType::Keyboard,
+                       [this]() { this->camera.translate(-1, 0); });
 }
 
 void GameState_Play::toogle_pause() {
