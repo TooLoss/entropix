@@ -15,7 +15,7 @@ private:
     /** Camera origin top left hand corner. */
     Coord origin;
     /** Numbers of x and y FRect. */
-    Coord camera_size;
+    Coord grid_dim;
     /** Margin of non-squared FRect. */
     Coord margins;
 
