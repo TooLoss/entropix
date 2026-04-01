@@ -10,7 +10,8 @@ private:
     /** Size of FRect inside render_grid. */
     size_t cell_size;
     SDL_Renderer* renderer;
-    SDL_Window* window;
+
+    Coord window_size;
 
     /** Camera origin top left hand corner. */
     Coord origin;
@@ -23,7 +24,7 @@ private:
     void draw_canvas();
 
 public:
-    Camera(World& world, SDL_Window* window, SDL_Renderer* renderer);
+    Camera(World& world, Coord window_size, SDL_Renderer* renderer);
 
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.

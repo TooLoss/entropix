@@ -3,9 +3,9 @@
 #include "render/Camera.hpp"
 #include "core/GameConst.hpp"
 
-Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer) :
+Camera::Camera(World& world, Coord window_size, SDL_Renderer* renderer) :
     world(world),
-    window(window),
+    window_size(window_size),
     renderer(renderer),
     cell_size(99),
     origin(0, 0),
@@ -16,9 +16,8 @@ Camera::Camera(World& world, SDL_Window* window, SDL_Renderer* renderer) :
 }
 
 void Camera::draw_canvas() {
-    int window_x, window_y;
-    SDL_GetWindowSize(this->window, &window_x, &window_y);
-    render_grid.clear();
+    int window_x = window_size.x;
+    int window_y = window_size.y;
 
     float margin_x = (window_x % cell_size) / 2.f;
     float margin_y = (window_y % cell_size) / 2.f;
@@ -29,7 +28,7 @@ void Camera::draw_canvas() {
 
     grid_dim = Coord(count_x + 2, count_y + 2);
 
-    render_grid.resize(grid_dim.x * camera_size.y);
+    render_grid.resize(grid_dim.x * grid_dim.y);
     for (size_t i = 0; i < count_x; i++) {
         for (size_t j = 0; j < count_y; j++) {
             float pos_x = ((i-1) * cell_size) + margin_x;
