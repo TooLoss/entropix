@@ -1,9 +1,10 @@
 #include "render/Camera.hpp"
 #include <SDL3/SDL_log.h>
+#include "core/GameConst.hpp"
 
-Camera::Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size) :
-    Canvas(c_pos, c_size),
-    world(world),
+Camera::Camera(SDL_Renderer* renderer, Coord c_pos, Coord c_size) :
+    Canva(c_pos, c_size),
+    world(GameConst::GRID_SIZE),
     renderer(renderer),
     cell_size(99),
     margins(0),

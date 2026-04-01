@@ -7,8 +7,6 @@ protected:
     SDL_Renderer* renderer;
     SDL_Window* window;
     InputManager input;
-    static constexpr size_t CANVAS_COUNT = 0;
-    std::array<std::unique_ptr<Canva>, CANVAS_COUNT> canvas;
 
 public:
     GameUI(SDL_Renderer *renderer, SDL_Window *window);
@@ -25,7 +23,6 @@ public:
 class GameUI_Play : public GameUI {
 private:
     std::unique_ptr<Camera> camera;
-    static constexpr size_t CANVAS_COUNT = 3;
 
 public:
     virtual void init_ui() override;

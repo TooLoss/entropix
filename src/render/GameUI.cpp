@@ -21,7 +21,11 @@ void GameUI::render() {}
 
 
 void GameUI_Play::init_ui() {
-    // TODO make Camera a canvas class
+    Coord pos = Coord(0);
+    int window_x, window_y;
+    SDL_GetWindowSize(this->window, &window_x, &window_y);
+    Coord size = Coord((3*window_x)/4, window_y);
+    camera = std::make_unique<Camera>(renderer, pos, size);
 }
 
 void GameUI_Play::bind_inputs() {
@@ -35,6 +39,4 @@ void GameUI_Play::bind_inputs() {
                        [this]() { this->camera->translate(-1, 0); });
 }
 
-void GameUI_Play::render() {
-    this->camera->render();
-}
+void GameUI_Play::render() {}

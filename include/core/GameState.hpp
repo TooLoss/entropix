@@ -27,7 +27,6 @@ public:
 
 class GameState_Play : public GameState {
 private:
-    World world;
     bool paused{false};
     InputManager input_manager;
 
