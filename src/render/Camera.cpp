@@ -1,21 +1,19 @@
-#include <SDL3/SDL_log.h>
-#include <algorithm>
 #include "render/Camera.hpp"
-#include "core/GameConst.hpp"
+#include <SDL3/SDL_log.h>
 
-Camera::Camera(World& world, Coord window_size, SDL_Renderer* renderer) :
+Camera::Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size) :
+    Canvas(c_pos, c_size),
     world(world),
-    window_size(window_size),
     renderer(renderer),
     cell_size(99),
-    origin(0, 0),
-    margins(0, 0),
-    grid_dim(0,0)
+    margins(0),
+    grid_dim(0)
 {
-    draw_canvas();
+   draw_canvas();
 }
 
 void Camera::draw_canvas() {
+    Coord window_size = get_size();
     int window_x = window_size.x;
     int window_y = window_size.y;
 
@@ -31,8 +29,10 @@ void Camera::draw_canvas() {
     render_grid.resize(grid_dim.x * grid_dim.y);
     for (size_t i = 0; i < count_x; i++) {
         for (size_t j = 0; j < count_y; j++) {
-            float pos_x = ((i-1) * cell_size) + margin_x;
-            float pos_y = ((j-1) * cell_size) + margin_y;
+            Coord pixel_pos = Coord(i-1, j-1);
+            Coord canvas_pos = get_canvas_location(pixel_pos);
+            float pos_x = canvas_pos.x * cell_size + margin_x;
+            float pos_y = canvas_pos.y * cell_size + margin_y;
             float show_size_x = (float)cell_size;
             float show_size_y = (float)cell_size;
             if (i == 0 || i == count_x - 1) show_size_x = cell_size - margin_x;
@@ -46,6 +46,7 @@ void Camera::draw_canvas() {
 }
 
 Coord Camera::camera_to_world_pos(Coord pos) {
+    Coord origin = get_position();
     return Coord(origin.x + pos.x, origin.y + pos.y);
 }
 
@@ -83,7 +84,8 @@ void Camera::zoom(int grow, Vector2<float> mouse_pos) {
 }
 
 void Camera::translate(int dx, int dy) {
-    origin = Coord(origin.x + dx, origin.y + dy);
+    Coord origin = get_size();
+    set_size(Coord(origin.x + dx, origin.y + dy));
     draw_canvas();
 }
 

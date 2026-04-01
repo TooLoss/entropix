@@ -1,7 +1,8 @@
 #pragma once
 #include "core/World.hpp"
+#include "render/Canva.hpp"
 
-class Camera {
+class Camera : public Canva {
 private:
     /** World grid. */
     World& world;
@@ -11,10 +12,6 @@ private:
     size_t cell_size;
     SDL_Renderer* renderer;
 
-    Coord window_size;
-
-    /** Camera origin top left hand corner. */
-    Coord origin;
     /** Numbers of x and y FRect. */
     Coord grid_dim;
     /** Margin of non-squared FRect. */
@@ -24,7 +21,7 @@ private:
     void draw_canvas();
 
 public:
-    Camera(World& world, Coord window_size, SDL_Renderer* renderer);
+    Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
 
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.

@@ -3,20 +3,21 @@
 #include <SDL3/SDL_events.h>
 #include "core/World.hpp"
 #include "core/InputManager.hpp"
-#include "render/Camera.hpp"
+#include "render/GameUI.hpp"
 
 class GameState {
 protected:
     SDL_Renderer* renderer;
     SDL_Window* window;
+    GameUI ui;
 
 public:
     GameState(SDL_Renderer *renderer, SDL_Window *window)
-    : renderer(renderer), window(window) {};
+    : renderer(renderer), window(window), ui(renderer, window) {};
 
     virtual ~GameState();
 
-    virtual void render() = 0;
+    virtual void render();
     virtual void update() = 0;
     virtual void init() = 0;
     virtual void input(SDL_Event* event) = 0;
@@ -27,7 +28,6 @@ public:
 class GameState_Play : public GameState {
 private:
     World world;
-    Camera camera;
     bool paused{false};
     InputManager input_manager;
 

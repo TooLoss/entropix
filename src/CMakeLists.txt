@@ -6,6 +6,7 @@ add_library(sand_lib STATIC
     core/InputManager.cpp
     render/Camera.cpp
     render/TerminalRender.cpp
+    render/GameUI.cpp
     cells/Cell.cpp
     cells/CellVoid.cpp
     cells/CellSand.cpp
