@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "utils/Coord.hpp"
 
 class Canva {

@@ -5,7 +5,7 @@
 class Camera : public Canva {
 private:
     /** World grid. */
-    World world;
+    World& world;
     /** Render grid contains FRects, will be colored. */
     std::vector<SDL_FRect> render_grid;
     /** Size of FRect inside render_grid. */
@@ -21,7 +21,7 @@ private:
     void draw_canvas();
 
 public:
-    Camera(SDL_Renderer* renderer, Coord c_pos, Coord c_size);
+    Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
 
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.

@@ -7,6 +7,7 @@ add_library(sand_lib STATIC
     render/Camera.cpp
     render/TerminalRender.cpp
     render/GameUI.cpp
+    render/Canva.cpp
     cells/Cell.cpp
     cells/CellVoid.cpp
     cells/CellSand.cpp

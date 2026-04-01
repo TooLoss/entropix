@@ -29,6 +29,7 @@ class GameState_Play : public GameState {
 private:
     bool paused{false};
     InputManager input_manager;
+    World world;
 
     void bind_input_manager();
     void input_place(SDL_Event* event, CellID id, bool force = false);
