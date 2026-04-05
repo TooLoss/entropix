@@ -15,3 +15,7 @@ Coord Canva::get_canvas_location(Coord relative_pos) const {
 void Canva::set_size(const Coord size) {
     this->size = size;
 }
+
+void Canva::set_position(const Coord pos) {
+    this->pos = pos;
+}

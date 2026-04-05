@@ -1,7 +1,10 @@
 #include "core/World.hpp"
 #include <stdexcept>
 
-World::World(Coord size) : size(size), registry() {
+World::World(Coord size) :
+    size(size),
+    registry()
+{
     this->grid.assign(size.x * size.y, this->VOID_PIXEL);
 }
 

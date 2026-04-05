@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include "utils/Coord.hpp"
 
 class Canva {
@@ -9,10 +8,12 @@ private:
 
 public:
     Canva(Coord pos, Coord size) : pos(pos), size(size) {}
+    Canva() : pos(0), size(0) {}
 
     Coord get_position() const;
     Coord get_size() const;
     Coord get_canvas_location(Coord relative_pos) const;
 
     void set_size(const Coord size);
+    void set_position(const Coord pos);
 };

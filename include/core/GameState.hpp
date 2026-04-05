@@ -4,16 +4,16 @@
 #include "core/World.hpp"
 #include "core/InputManager.hpp"
 #include "render/GameUI.hpp"
+#include "render/Camera.hpp"
 
 class GameState {
 protected:
     SDL_Renderer* renderer;
     SDL_Window* window;
-    GameUI ui;
+    std::unique_ptr<GameUI> ui;
 
 public:
-    GameState(SDL_Renderer *renderer, SDL_Window *window)
-    : renderer(renderer), window(window), ui(renderer, window) {};
+    GameState(SDL_Renderer *renderer, SDL_Window *window);
 
     virtual ~GameState();
 
@@ -30,6 +30,7 @@ private:
     bool paused{false};
     InputManager input_manager;
     World world;
+    Camera camera;
 
     void bind_input_manager();
     void input_place(SDL_Event* event, CellID id, bool force = false);

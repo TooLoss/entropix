@@ -1,6 +1,12 @@
 #include "render/Camera.hpp"
 #include <SDL3/SDL_log.h>
 
+Camera::Camera(World& world, SDL_Renderer* renderer) :
+    Camera(world, renderer, Coord(0), Coord(0))
+{
+   draw_canvas();
+}
+
 Camera::Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size) :
     Canva(c_pos, c_size),
     world(world),
@@ -8,9 +14,7 @@ Camera::Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size) 
     cell_size(99),
     margins(0),
     grid_dim(0)
-{
-   draw_canvas();
-}
+{}
 
 void Camera::draw_canvas() {
     Coord window_size = get_size();
