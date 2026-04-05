@@ -10,6 +10,11 @@ struct Vector2 {
     Vector2(T scal) : x(scal), y(scal) {};
     Vector2() : x(0), y(0) {};
 
+    // Convert Vector2
+    template <typename U>
+    Vector2(const Vector2<U>& other) 
+        : x(static_cast<T>(other.x)), y(static_cast<T>(other.y)) {}
+
     Vector2 operator+(const Vector2& other) const { return Vector2(x + other.x, y + other.y); }
     Vector2 operator-(const Vector2& other) const { return Vector2(x - other.x, y - other.y); }
     Vector2& operator+=(const Vector2& other) { x += other.x; y += other.y; return *this; }
@@ -45,11 +50,6 @@ struct Vector2 {
         Iterator begin() const { return Iterator{0, 0, x}; }
         Iterator end() const { return Iterator{0, y, x}; }
     };
-
-    // Convert Vector2
-    template <typename U>
-    Vector2(const Vector2<U>& other) 
-        : x(static_cast<T>(other.x)), y(static_cast<T>(other.y)) {}
 
     Range all_points() const { return Range{x, y}; }
 

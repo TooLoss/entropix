@@ -37,12 +37,11 @@ void Camera::draw_grid() {
 
 Vector2<int> Camera::screen_to_world_tile(Vector2<float> screen_pos) {
     auto margins = grid.get_margins();
-    int px = std::floor(screen_pos.x - margins.x);
-    int py = std::floor(screen_pos.y - margins.y);
     Coord origin = get_position();
-    return Vector2<int>(
-        world_pos_offset.x + 1 + (px - origin.x) / cell_size,
-        world_pos_offset.y + 1 + (py - origin.y) / cell_size);
+    int px = std::floor((screen_pos.x - margins.x - origin.x) / cell_size);
+    int py = std::floor((screen_pos.y - margins.y - origin.y) / cell_size);
+    return Vector2<int>(world_pos_offset.x + 1 + px,
+                        world_pos_offset.y + 1 + py);
 }
 
 void Camera::render() {
