@@ -44,6 +44,5 @@ public:
 
     virtual void init() override;
     virtual void update() override;
-    virtual void render() override;
     virtual void input(SDL_Event* event) override;
 };
