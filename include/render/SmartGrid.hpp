@@ -37,8 +37,6 @@ struct SmartGrid {
             for (size_t j = 0; j < count_y; j++) {
                 float x, y;
                 float cw, ch;
-
-                // X Logic (Horizontal)
                 if (i == 0) {
                     x = 0;
                     cw = margin_x;
@@ -49,8 +47,6 @@ struct SmartGrid {
                     x = margin_x + (float)((i - 1) * sx);
                     cw = (float)sx;
                 }
-
-                // Y Logic (Vertical)
                 if (j == 0) {
                     y = 0;
                     ch = margin_y;

@@ -49,13 +49,15 @@ void GameState_Play::toogle_pause() {
 void GameState_Play::input_place(SDL_Event* event, CellID id, bool force) {
     uint8_t cell_size = camera.get_cell_size();
     Vector2<float> mouse = { event->button.x, event->button.y };
-    Coord mouse_world_pos = camera.screen_to_world_tile(mouse);
+    auto mouse_world_pos = camera.screen_to_world_tile(mouse);
     Pixel pixel;
     pixel.id = id;
-    if (!world.is_out_of_range(mouse_world_pos) &&
-        (force || world.is_empty(mouse_world_pos)))
-        world.set_pixel(mouse_world_pos, pixel);
-    SDL_Log("Pixel added position : %zu, %zu", mouse_world_pos.x, mouse_world_pos.y);
+    if (!world.is_out_of_range(mouse_world_pos)) {
+        if (force || world.is_empty(mouse_world_pos)) {
+            world.set_pixel(mouse_world_pos, pixel);
+            SDL_Log("Pixel added position : %i, %i", mouse_world_pos.x, mouse_world_pos.y);
+        }
+    }
 }
 
 void GameState_Play::init() {

@@ -52,6 +52,7 @@ public:
      * @return true if the pos is out of the grid.
      */
     bool is_out_of_range(Coord pos) const;
+    bool is_out_of_range(Vector2<int> pos) const;
 
     /** Get registry reference used to store behavior of cells by id.
     * @return CellRegistry& reference to World Cell Regsitry.

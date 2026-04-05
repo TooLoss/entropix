@@ -75,7 +75,13 @@ void World::swap(Coord in, Coord out, bool lock_out) {
 }
 
 bool World::is_out_of_range(Coord pos) const {
-    return (pos.x >= this->size.x || pos.y >= this->size.y || !(pos >= 0));
+    // by convention, pos is always unsigned
+    return (pos.x >= this->size.x || pos.y >= this->size.y);
+}
+
+bool World::is_out_of_range(Vector2<int> pos) const {
+    Coord upos(pos.x, pos.y);
+    return (!(pos >= 0) || is_out_of_range(upos));
 }
 
 void World::lock(Coord pos) {

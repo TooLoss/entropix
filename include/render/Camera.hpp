@@ -31,7 +31,7 @@ public:
     * @param pos Coord in camera position.
     * @return Coord in world position.
     */
-    Coord screen_to_world_tile(Vector2<float> screen_pos);
+    Vector2<int> screen_to_world_tile(Vector2<float> screen_pos);
 
     /** Render the grid with the cell data contained in world. */
     void render();

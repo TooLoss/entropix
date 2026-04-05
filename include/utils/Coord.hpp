@@ -46,6 +46,11 @@ struct Vector2 {
         Iterator end() const { return Iterator{0, y, x}; }
     };
 
+    // Convert Vector2
+    template <typename U>
+    Vector2(const Vector2<U>& other) 
+        : x(static_cast<T>(other.x)), y(static_cast<T>(other.y)) {}
+
     Range all_points() const { return Range{x, y}; }
 
     T vector_to_index(Vector2 size) const { return size.x * y + x; }
