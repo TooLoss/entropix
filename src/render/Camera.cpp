@@ -1,5 +1,6 @@
-#include "render/Camera.hpp"
+#include <cmath>
 #include <SDL3/SDL_log.h>
+#include "render/Camera.hpp"
 #include "render/SmartGrid.hpp"
 
 Camera::Camera(World& world, SDL_Renderer* renderer) :
@@ -18,10 +19,10 @@ void Camera::draw_grid() {
     Coord canvas_size = get_size();
     Coord canvas_origin = get_position();
 
-    SmartGrid::SmartGrid sg = { cell_size, cell_size, canvas_size.x, canvas_size.y };
-    grid_dim = sg.get_dim();
+    grid = { cell_size, cell_size, canvas_size.x, canvas_size.y };
+    grid_dim = grid.get_dim();
     render_grid.resize(grid_dim.x * grid_dim.y);
-    std::vector<SmartGrid::Cell> cells = sg.get_cells();
+    std::vector<SmartGrid::Cell> cells = grid.get_cells();
 
     for (auto cell : cells) {
         SDL_FRect rect = { 
@@ -34,10 +35,12 @@ void Camera::draw_grid() {
     }
 }
 
-Coord Camera::screen_to_world_tile(Coord screen_pos) {
-    int lx = (screen_pos.x - get_position().x) / (int)cell_size;
-    int ly = (screen_pos.y - get_position().y) / (int)cell_size;
-    return Coord(world_pos_offset.x + lx, world_pos_offset.y + ly);
+Coord Camera::screen_to_world_tile(Vector2<float> screen_pos) {
+    auto margins = grid.get_margins();
+    int px = std::floor((screen_pos.x - margins.x) / cell_size);
+    int py = std::floor((screen_pos.y - margins.y) / cell_size);
+    Coord origin = get_position();
+    return Coord(world_pos_offset.x + (px - origin.x) + 1, world_pos_offset.y + (py - origin.y) + 1);
 }
 
 void Camera::render() {

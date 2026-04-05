@@ -1,6 +1,7 @@
 #pragma once
 #include "core/World.hpp"
 #include "render/Canva.hpp"
+#include "render/SmartGrid.hpp"
 
 class Camera : public Canva {
 private:
@@ -16,6 +17,8 @@ private:
     Coord grid_dim;
     /** World position of the camera. */
     Coord world_pos_offset;
+    /** Smart grid to generate position of each cell for SDL3 */
+    SmartGrid::SmartGrid grid;
 
 public:
     Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
@@ -28,7 +31,7 @@ public:
     * @param pos Coord in camera position.
     * @return Coord in world position.
     */
-    Coord screen_to_world_tile(Coord screen_pos);
+    Coord screen_to_world_tile(Vector2<float> screen_pos);
 
     /** Render the grid with the cell data contained in world. */
     void render();

@@ -69,6 +69,12 @@ struct SmartGrid {
         Coord dim = get_dim();
         return dim.x * dim.y;
     }
+
+    Vector2<float> get_margins() {
+        float margin_x = (float)(wx % sx) / 2.f;
+        float margin_y = (float)(wy % sy) / 2.f;
+        return Vector2<float>(margin_x, margin_y);
+    }
 };
 
 }
