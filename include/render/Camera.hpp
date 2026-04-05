@@ -24,8 +24,6 @@ public:
     Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
     Camera(World& world, SDL_Renderer* renderer);
 
-    ~Camera();
-
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.
     * @return Coord in world position.
