@@ -5,11 +5,7 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
     window(window),
     gamestate(gamestate)
 {
-    // this->init_ui();
-}
-
-void GameUI::hander_ui_inputs(SDL_Event *event, InputType type) {
-    input.handle_event(*event, type);
+    this->init_ui();
 }
 
 void GameUI::init_ui() {}

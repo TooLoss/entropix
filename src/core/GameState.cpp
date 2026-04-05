@@ -69,8 +69,6 @@ void GameState_Play::input(SDL_Event* event) {
             this->input_place(event, CellID::VOID, true);
     } else if (event->type == SDL_EVENT_KEY_DOWN) {
         this->input_manager.handle_event(*event, InputType::Keyboard);
-        // TODO Make a class that store every inputs
-        this->ui.hander_ui_inputs(event, InputType::Keyboard);
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {
         float mouse_x, mouse_y;
         uint32_t buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
