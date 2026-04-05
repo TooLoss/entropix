@@ -29,7 +29,7 @@ void GameUI_Play::init_camera() {
     Coord pos = Coord(0);
     int window_x, window_y;
     SDL_GetWindowSize(this->window, &window_x, &window_y);
-    Coord size = Coord(window_x, window_y);
+    Coord size = Coord(window_x/2, window_y);
     camera.set_size(size);
     camera.set_position(pos);
     camera.draw_grid();

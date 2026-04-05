@@ -35,22 +35,34 @@ struct SmartGrid {
         cells.resize(dim.x * dim.y);
         for (size_t i = 0; i < count_x; i++) {
             for (size_t j = 0; j < count_y; j++) {
-                Coord p(i-1, j-1);
                 float x, y;
-                if (i == 0) x = 0;
-                else x = margin_x + (p.x * sx);
+                float cw, ch;
 
-                if (j == 0) y = 0;
-                else y = margin_y + (p.y * sy);
+                // X Logic (Horizontal)
+                if (i == 0) {
+                    x = 0;
+                    cw = margin_x;
+                } else if (i == count_x - 1) {
+                    x = margin_x + (float)((count_x - 2) * sx);
+                    cw = margin_x;
+                } else {
+                    x = margin_x + (float)((i - 1) * sx);
+                    cw = (float)sx;
+                }
 
-                float cx, cy;
-                if (i == 0 || i == dim.x - 1) cx = sx - margin_x;
-                else cx = sx;
+                // Y Logic (Vertical)
+                if (j == 0) {
+                    y = 0;
+                    ch = margin_y;
+                } else if (j == count_y - 1) {
+                    y = margin_y + (float)((count_y - 2) * sy);
+                    ch = margin_y;
+                } else {
+                    y = margin_y + (float)((j - 1) * sy);
+                    ch = (float)sy;
+                }
 
-                if (j == 0 || j == dim.y - 1) cy = sy - margin_y;
-                else cy = sy;
-
-                const Cell cell = {x, y, cx, cy, Coord(i,j)};
+                const Cell cell = {x, y, cw, ch, Coord(i,j)};
                 cells[Coord(i, j).vector_to_index(dim)] = cell;
             }
         }
