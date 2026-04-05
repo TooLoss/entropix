@@ -14,21 +14,21 @@ private:
 
     /** Numbers of x and y FRect. */
     Coord grid_dim;
-    /** Margin of non-squared FRect. */
-    Coord margins;
-
-    /** Init the render_grid canvas, margins and size. */
-    void draw_canvas();
+    /** World position of the camera. */
+    Coord world_pos_offset;
 
 public:
     Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
     Camera(World& world, SDL_Renderer* renderer);
 
+    /** Init the render_grid canvas, margins and size. */
+    void draw_grid();
+
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.
     * @return Coord in world position.
     */
-    Coord camera_to_world_pos(Coord pos);
+    Coord screen_to_world_tile(Coord screen_pos);
 
     /** Render the grid with the cell data contained in world. */
     void render();
@@ -40,11 +40,6 @@ public:
     void zoom(int grow, Vector2<float> mouse_pos);
 
     void translate(int dx, int dy);
-
-    /** Get the margin.
-     * @return Coord margin x and y.
-     */
-    Coord get_margin();
 
     /** Get cell size.
     * @return size_t cell_size.

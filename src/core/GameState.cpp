@@ -46,10 +46,10 @@ void GameState_Play::toogle_pause() {
 
 void GameState_Play::input_place(SDL_Event* event, CellID id, bool force) {
     uint8_t cell_size = camera.get_cell_size();
-    Coord m = camera.get_margin();
+    Coord m = 0;
     const int mouse_x = static_cast<int>((event->button.x + m.x) / cell_size);
     const int mouse_y = static_cast<int>((event->button.y + m.y) / cell_size);
-    Coord mouse_world_pos = camera.camera_to_world_pos(Coord(mouse_x, mouse_y));
+    Coord mouse_world_pos = camera.screen_to_world_tile(Coord(mouse_x, mouse_y));
     Pixel pixel;
     pixel.id = id;
     if (!world.is_out_of_range(mouse_world_pos) &&
