@@ -1,5 +1,6 @@
 #pragma once
 #include "utils/Coord.hpp"
+#include <SDL3/SDL_events.h>
 
 class Canva {
 private:
@@ -17,5 +18,8 @@ public:
     void set_size(const Coord size);
     void set_position(const Coord pos);
 
+    bool is_hit(const Coord hit);
+
     virtual void refresh_canva();
+    virtual void mouse_action(SDL_Event* event);
 };

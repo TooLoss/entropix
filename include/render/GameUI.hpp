@@ -1,11 +1,14 @@
 #pragma once
 #include <SDL3/SDL_render.h>
+#include <functional>
 #include "render/Camera.hpp"
 
 struct WindowLayout {
+
+    WindowLayout(std::reference_wrapper<Canva> canva, int z_index = 0)
+        : canva(canva), z_index(z_index) {}
+
     std::reference_wrapper<Canva> canva;
-    Coord size = Coord(0);
-    Coord position = Coord(0);
     int z_index = 0;
 };
 
@@ -21,8 +24,9 @@ protected:
 public:
     GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState &gamestate);
     
-    void register_canva(WindowLayout layout);
-    Canva* get_canvas(Coord pos);
+    void register_canva(WindowLayout new_layout);
+    void register_canva(WindowLayout new_layout, Coord size, Coord pos);
+    Canva* get_canvas(Coord hit);
     virtual void init_ui();
     virtual void render();
 };

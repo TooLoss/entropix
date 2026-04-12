@@ -11,17 +11,26 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
 
 void GameUI::register_canva(WindowLayout new_layout) {
     Canva& in_canvas = new_layout.canva.get();
-    in_canvas.set_size(new_layout.size);
-    in_canvas.set_position(new_layout.position);
     in_canvas.refresh_canva();
     this->layouts.push_back(new_layout);
 }
 
-Canva* GameUI::get_canvas(Coord pos) {
+void GameUI::register_canva(WindowLayout new_layout, Coord size, Coord pos) {
+    Canva& in_canvas = new_layout.canva.get();
+    in_canvas.set_size(size);
+    in_canvas.set_position(pos);
+    register_canva(new_layout);
+}
+
+Canva* GameUI::get_canvas(Coord hit) {
+    Canva* hit_canva = nullptr;
+    int max_zlayout = 0;
     for (auto layout : layouts) {
-        Coord pos_begin(canva.position);
-        Coord pos_end(canva.position + canva.size);
-        if ();
+        Canva& canva = layout.canva.get();
+        if (canva.is_hit(hit)) {
+            hit_canva = &canva;
+            max_zlayout = layout.z_index;
+        }
     }
     return nullptr;
 }
@@ -50,8 +59,8 @@ void GameUI_Play::init_camera() {
 
     Coord cam_pos = Coord(0);
     Coord cam_size = Coord(3*window_x/4, window_y);
-    this->register_canva({ camera, cam_size, cam_pos });
-    SDL_Log("UI camera redraw");
+    WindowLayout cam_layout(camera);
+    this->register_canva(cam_layout, cam_size, cam_pos);
 }
 
 void GameUI_Play::init_ui() {

@@ -20,4 +20,14 @@ void Canva::set_position(const Coord pos) {
     this->pos = pos;
 }
 
+bool Canva::is_hit(const Coord hit) {
+    Coord pos_start = this->pos;
+    Coord pos_end = this->pos + this->size;
+    bool in_x = pos_start.x <= hit.x && pos_end.x > hit.x;
+    bool in_y = pos_start.y <= hit.y && pos_end.y > hit.y;
+    return in_x && in_y;
+}
+
 void Canva::refresh_canva() {}
+
+void Canva::mouse_action(SDL_Event* event) {}
