@@ -9,13 +9,13 @@ World::World(Coord size) :
 }
 
 void World::update_position(Coord pos) {
-    if (!is_locked(pos)) {
+    if (!this->is_locked(pos)) {
         Pixel pixel = this->get_pixel(pos);
         const Cell& cell = registry.get(pixel.id);
         if (FRAME_BUFFER % cell.get_update_frame() == 0) {
             cell.update(pos, *this);
         }
-        lock(pos);
+        this->lock(pos);
     }
 }
 
@@ -23,7 +23,7 @@ void World::refresh() {
     locker_flipflop = !locker_flipflop;
     for (int i = size.x - 1; i >= 0; i--) {
         for (int j = size.y - 1; j >= 0; j--) {
-            update_position(Coord(i, j));
+            this->update_position(Coord(i, j));
         }
     }
 }
