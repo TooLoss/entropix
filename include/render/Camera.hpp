@@ -20,12 +20,14 @@ private:
     /** Smart grid to generate position of each cell for SDL3 */
     SmartGrid::SmartGrid grid;
 
+    /** Init the render_grid canvas, margins and size. */
+    void draw_grid();
+
 public:
     Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
     Camera(World& world, SDL_Renderer* renderer);
 
-    /** Init the render_grid canvas, margins and size. */
-    void draw_grid();
+    virtual void refresh_canva() override;
 
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.

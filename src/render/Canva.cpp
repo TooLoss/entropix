@@ -19,3 +19,5 @@ void Canva::set_size(const Coord size) {
 void Canva::set_position(const Coord pos) {
     this->pos = pos;
 }
+
+void Canva::refresh_canva() {}

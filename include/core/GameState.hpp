@@ -31,6 +31,7 @@ private:
     InputManager input_manager;
     World world;
     Camera camera;
+    CellID cell_selected;
 
     void bind_input_manager();
     void input_place(SDL_Event* event, CellID id, bool force = false);

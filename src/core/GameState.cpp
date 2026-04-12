@@ -39,6 +39,9 @@ void GameState_Play::bind_input_manager() {
                        [this]() { this->camera.translate(1, 0); });
     input_manager.bind(SDLK_LEFT, ActionID::MoveLeft, InputType::Keyboard,
                        [this]() { this->camera.translate(-1, 0); });
+    // input_manager.bind(SDL_BUTTON_LEFT, ActionID::Place, InputType::MouseButton,
+    //                    [this]() { this->input_place(-1, 0); });
+    // TODO pass location ?
 }
 
 void GameState_Play::toogle_pause() {

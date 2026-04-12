@@ -16,4 +16,6 @@ public:
 
     void set_size(const Coord size);
     void set_position(const Coord pos);
+
+    virtual void refresh_canva();
 };

@@ -35,6 +35,10 @@ void Camera::draw_grid() {
     }
 }
 
+void Camera::refresh_canva() {
+    draw_grid();
+}
+
 Vector2<int> Camera::screen_to_world_tile(Vector2<float> screen_pos) {
     auto margins = grid.get_margins();
     Coord origin = get_position();

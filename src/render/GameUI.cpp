@@ -9,6 +9,13 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
     init_ui();
 }
 
+void GameUI::register_canva(WindowLayout new_layout) {
+    new_layout.canva.set_size(new_layout.size);
+    new_layout.canva.set_position(new_layout.position);
+    new_layout.canva.refresh_canva();
+    this->layout.push_back(new_layout);
+}
+
 void GameUI::init_ui() {}
 
 void GameUI::render() {}
@@ -26,13 +33,14 @@ GameUI_Play::GameUI_Play(SDL_Renderer *renderer, SDL_Window *window,
 }
 
 void GameUI_Play::init_camera() {
-    Coord pos = Coord(0);
+    layout.reserve(2);
+
     int window_x, window_y;
     SDL_GetWindowSize(this->window, &window_x, &window_y);
-    Coord size = Coord(3*window_x/4, window_y);
-    camera.set_size(size);
-    camera.set_position(pos);
-    camera.draw_grid();
+
+    Coord cam_pos = Coord(0);
+    Coord cam_size = Coord(3*window_x/4, window_y);
+    this->register_canva({ camera, cam_size, cam_pos });
     SDL_Log("UI camera redraw");
 }
 
