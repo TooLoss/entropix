@@ -3,9 +3,10 @@
 #include "render/Camera.hpp"
 
 struct WindowLayout {
-    Canva& canva;
-    Coord size;
-    Coord position;
+    std::reference_wrapper<Canva> canva;
+    Coord size = Coord(0);
+    Coord position = Coord(0);
+    int z_index = 0;
 };
 
 class GameState;
@@ -15,12 +16,13 @@ protected:
     SDL_Renderer* renderer;
     SDL_Window* window;
     GameState& gamestate; // TODO not useful for now
-    std::vector<WindowLayout> layout;
+    std::vector<WindowLayout> layouts;
 
 public:
     GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState &gamestate);
     
     void register_canva(WindowLayout layout);
+    Canva* get_canvas(Coord pos);
     virtual void init_ui();
     virtual void render();
 };

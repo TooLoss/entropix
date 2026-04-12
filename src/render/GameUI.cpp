@@ -10,10 +10,20 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
 }
 
 void GameUI::register_canva(WindowLayout new_layout) {
-    new_layout.canva.set_size(new_layout.size);
-    new_layout.canva.set_position(new_layout.position);
-    new_layout.canva.refresh_canva();
-    this->layout.push_back(new_layout);
+    Canva& in_canvas = new_layout.canva.get();
+    in_canvas.set_size(new_layout.size);
+    in_canvas.set_position(new_layout.position);
+    in_canvas.refresh_canva();
+    this->layouts.push_back(new_layout);
+}
+
+Canva* GameUI::get_canvas(Coord pos) {
+    for (auto layout : layouts) {
+        Coord pos_begin(canva.position);
+        Coord pos_end(canva.position + canva.size);
+        if ();
+    }
+    return nullptr;
 }
 
 void GameUI::init_ui() {}
@@ -33,7 +43,7 @@ GameUI_Play::GameUI_Play(SDL_Renderer *renderer, SDL_Window *window,
 }
 
 void GameUI_Play::init_camera() {
-    layout.reserve(2);
+    layouts.reserve(2);
 
     int window_x, window_y;
     SDL_GetWindowSize(this->window, &window_x, &window_y);
