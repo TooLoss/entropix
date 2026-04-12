@@ -27,12 +27,12 @@ Canva* GameUI::get_canvas(Coord hit) {
     int max_zlayout = 0;
     for (auto layout : layouts) {
         Canva& canva = layout.canva.get();
-        if (canva.is_hit(hit)) {
+        if (canva.is_hit(hit) && layout.z_index >= max_zlayout) {
             hit_canva = &canva;
             max_zlayout = layout.z_index;
         }
     }
-    return nullptr;
+    return hit_canva;
 }
 
 void GameUI::init_ui() {}
