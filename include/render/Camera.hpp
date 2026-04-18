@@ -28,6 +28,7 @@ public:
     Camera(World& world, SDL_Renderer* renderer);
 
     virtual void refresh_canva() override;
+    virtual void mouse_action(SDL_Event* event, GameState& gamestate) override;
 
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.

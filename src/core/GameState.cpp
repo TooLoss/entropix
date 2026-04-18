@@ -68,10 +68,13 @@ void GameState_Play::init() {
 
 void GameState_Play::input(SDL_Event* event) {
     if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-        if (event->button.button == SDL_BUTTON_LEFT)
-            this->input_place(event, CellID::SAND);
-        else if (event->button.button == SDL_BUTTON_RIGHT)
-            this->input_place(event, CellID::VOID, true);
+        Coord hit(event->button.x, event->button.y);
+        Canva* canva = ui->get_canvas(hit);
+        canva->mouse_action(event, *this);
+        // if (event->button.button == SDL_BUTTON_LEFT)
+        //     this->input_place(event, CellID::SAND);
+        // else if (event->button.button == SDL_BUTTON_RIGHT)
+        //     this->input_place(event, CellID::VOID, true);
     } else if (event->type == SDL_EVENT_KEY_DOWN) {
         this->input_manager.handle_event(*event, InputType::Keyboard);
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {
