@@ -15,6 +15,14 @@ void GameState::render() {
     if (ui) this->ui->render();
 }
 
+void GameState::click_canvas(SDL_Event* event) {
+    Coord hit(event->button.x, event->button.y);
+    Canva* hit_canva;
+    if (ui && (hit_canva = ui->get_canvas(hit))) {
+        hit_canva->event_clicked();
+    }
+}
+
 /*
 * GameState_Play
 */
@@ -42,6 +50,9 @@ void GameState_Play::bind_input_manager() {
     // input_manager.bind(SDL_BUTTON_LEFT, ActionID::Place, InputType::MouseButton,
     //                    [this]() { this->input_place(-1, 0); });
     // TODO pass location ?
+    camera.set_click_event([this]() {
+        this->input_place(&this->last_event, this->cell_selected, false);
+    });
 }
 
 void GameState_Play::toogle_pause() {
@@ -64,17 +75,13 @@ void GameState_Play::input_place(SDL_Event* event, CellID id, bool force) {
 }
 
 void GameState_Play::init() {
+    cell_selected = CellID::SAND;
 }
 
 void GameState_Play::input(SDL_Event* event) {
+    last_event = *event;
     if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-        Coord hit(event->button.x, event->button.y);
-        Canva* canva = ui->get_canvas(hit);
-        canva->mouse_action(event, *this);
-        // if (event->button.button == SDL_BUTTON_LEFT)
-        //     this->input_place(event, CellID::SAND);
-        // else if (event->button.button == SDL_BUTTON_RIGHT)
-        //     this->input_place(event, CellID::VOID, true);
+        click_canvas(event);
     } else if (event->type == SDL_EVENT_KEY_DOWN) {
         this->input_manager.handle_event(*event, InputType::Keyboard);
     } else if (event->type == SDL_EVENT_MOUSE_WHEEL) {

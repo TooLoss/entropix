@@ -30,8 +30,6 @@ bool Canva::is_hit(const Coord hit) {
 
 void Canva::refresh_canva() {}
 
-void Canva::mouse_action(SDL_Event* event, GameState& gamestate) {}
-
 void Canva::set_click_event(std::function<void()> func) {
     click_event = func;
 }

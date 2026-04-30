@@ -12,6 +12,8 @@ protected:
     SDL_Window* window;
     std::unique_ptr<GameUI> ui;
 
+    void click_canvas(SDL_Event* event);
+
 public:
     GameState(SDL_Renderer *renderer, SDL_Window *window);
 
@@ -32,6 +34,7 @@ private:
     World world;
     Camera camera;
     CellID cell_selected;
+    SDL_Event last_event;
 
     void bind_input_manager();
     void input_place(SDL_Event* event, CellID id, bool force = false);

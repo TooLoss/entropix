@@ -26,7 +26,6 @@ public:
     bool is_hit(const Coord hit);
 
     virtual void refresh_canva();
-    virtual void mouse_action(SDL_Event* event, GameState& gamestate);
 
     void set_click_event(std::function<void()> func);
     void event_clicked();
