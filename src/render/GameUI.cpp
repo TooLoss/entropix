@@ -1,4 +1,5 @@
 #include <SDL3/SDL_log.h>
+#include <algorithm>
 #include "render/GameUI.hpp"
 
 GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate) :
@@ -10,9 +11,13 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
 }
 
 void GameUI::register_canva(WindowLayout new_layout) {
+    auto it = std::upper_bound(layouts.begin(), layouts.end(), new_layout, 
+        [](const WindowLayout& a, const WindowLayout& b) {
+            return a.z_index < b.z_index;
+        });
     Canva& in_canvas = new_layout.canva.get();
     in_canvas.refresh_canva();
-    this->layouts.push_back(new_layout);
+    this->layouts.insert(it, new_layout);
 }
 
 void GameUI::register_canva(WindowLayout new_layout, Coord size, Coord pos) {
@@ -23,16 +28,15 @@ void GameUI::register_canva(WindowLayout new_layout, Coord size, Coord pos) {
 }
 
 Canva* GameUI::get_canvas(Coord hit) {
+    // Already sort by z_index
     Canva* hit_canva = nullptr;
-    int max_zlayout = 0;
     for (auto layout : layouts) {
         Canva& canva = layout.canva.get();
-        if (canva.is_hit(hit) && layout.z_index >= max_zlayout) {
-            hit_canva = &canva;
-            max_zlayout = layout.z_index;
+        if (canva.is_hit(hit)) {
+            return &canva;
         }
     }
-    return hit_canva;
+    return nullptr;
 }
 
 void GameUI::init_ui() {}
