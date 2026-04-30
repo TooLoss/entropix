@@ -6,11 +6,16 @@
 #include "render/GameUI.hpp"
 #include "render/Camera.hpp"
 
+struct WindowInfo {
+    int w, h;
+};
+
 class GameState {
 protected:
     SDL_Renderer* renderer;
     SDL_Window* window;
     std::unique_ptr<GameUI> ui;
+    WindowInfo info;
 
     void click_canvas(SDL_Event* event);
 
@@ -23,6 +28,10 @@ public:
     virtual void update() = 0;
     virtual void init() = 0;
     virtual void input(SDL_Event* event) = 0;
+
+    SDL_Renderer* get_renderer();
+    SDL_Window* get_window();
+    Coord get_screen_size();
 };
 
 

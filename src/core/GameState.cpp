@@ -7,7 +7,11 @@
 GameState::GameState(SDL_Renderer *renderer, SDL_Window *window) :
     renderer(renderer),
     window(window),
-    ui(nullptr) {};
+    ui(nullptr)
+{
+    WindowInfo info;
+    SDL_GetWindowSize(window, &info.w, &info.h);
+};
 
 GameState::~GameState() {}
 
@@ -23,6 +27,18 @@ void GameState::click_canvas(SDL_Event* event) {
     }
 }
 
+SDL_Renderer* GameState::get_renderer() {
+    return this->renderer;
+}
+
+SDL_Window* GameState::get_window() {
+    return this->window;
+}
+
+Coord GameState::get_screen_size() {
+    return Coord(info.w, info.h);
+}
+
 /*
 * GameState_Play
 */
@@ -30,7 +46,7 @@ void GameState::click_canvas(SDL_Event* event) {
 GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window) :
     GameState(renderer, window),
     world(GameConst::GRID_SIZE),
-    camera(world, renderer)
+    camera(*this, world)
 {
     this->ui = std::make_unique<GameUI_Play>(renderer, window, *this, camera);
     bind_input_manager();

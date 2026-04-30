@@ -11,7 +11,6 @@ private:
     std::vector<SDL_FRect> render_grid;
     /** Size of FRect inside render_grid. */
     size_t cell_size;
-    SDL_Renderer* renderer;
 
     /** Numbers of x and y FRect. */
     Coord grid_dim;
@@ -24,8 +23,8 @@ private:
     void draw_grid();
 
 public:
-    Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size);
-    Camera(World& world, SDL_Renderer* renderer);
+    Camera(GameState& owner, World& world, Coord c_pos, Coord c_size);
+    Camera(GameState& owner, World& world);
 
     virtual void refresh_canva() override;
 

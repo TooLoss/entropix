@@ -1,4 +1,5 @@
 #include "render/Canva.hpp"
+#include "core/GameState.hpp"
 
 Coord Canva::get_position() const {
     return pos;
@@ -38,4 +39,8 @@ void Canva::set_click_event(std::function<void()> func) {
 
 void Canva::event_clicked() {
     click_event();
+}
+
+SDL_Renderer* Canva::get_renderer() {
+    return this->game_state.get_renderer();
 }

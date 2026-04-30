@@ -3,16 +3,15 @@
 #include "render/Camera.hpp"
 #include "render/SmartGrid.hpp"
 
-Camera::Camera(World& world, SDL_Renderer* renderer) :
-    Camera(world, renderer, Coord(0), Coord(0))
+Camera::Camera(GameState& owner, World& world) :
+    Camera(owner, world, Coord(0), Coord(0))
 {
    draw_grid();
 }
 
-Camera::Camera(World& world, SDL_Renderer* renderer, Coord c_pos, Coord c_size) :
-    Canva(c_pos, c_size),
+Camera::Camera(GameState& owner, World& world, Coord c_pos, Coord c_size) :
+    Canva(owner, c_pos, c_size),
     world(world),
-    renderer(renderer),
     cell_size(99) {}
 
 void Camera::draw_grid() {
@@ -57,11 +56,11 @@ void Camera::render() {
                 const Cell& cell = world.get_registry().get(pixel.id);
                 size_t render_index = Coord(i, j).vector_to_index(grid_dim);
                 
-                cell.render(world_pos, world, renderer, &render_grid[render_index]);
+                cell.render(world_pos, world, this->get_renderer(), &render_grid[render_index]);
             }
         }
     }
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(this->get_renderer());
 }
 
 void Camera::zoom(int grow, Vector2<float> mouse_pos) {
