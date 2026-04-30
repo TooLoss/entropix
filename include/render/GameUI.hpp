@@ -44,5 +44,4 @@ public:
                 GameState &gamestate, Camera &camera);
 
     virtual void init_ui() override;
-    virtual void render() override;
 };

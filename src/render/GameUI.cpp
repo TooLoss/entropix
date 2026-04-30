@@ -41,7 +41,11 @@ Canva* GameUI::get_canvas(Coord hit) {
 
 void GameUI::init_ui() {}
 
-void GameUI::render() {}
+void GameUI::render() {
+    for (auto layout : layouts) {
+        layout.canva.get().render();
+    }
+}
 
 /*
 *   GameUI_Play
@@ -69,8 +73,4 @@ void GameUI_Play::init_camera() {
 
 void GameUI_Play::init_ui() {
     init_camera();
-}
-
-void GameUI_Play::render() {
-    camera.render();
 }

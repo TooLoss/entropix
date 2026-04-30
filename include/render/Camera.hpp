@@ -28,7 +28,6 @@ public:
     Camera(World& world, SDL_Renderer* renderer);
 
     virtual void refresh_canva() override;
-    virtual void mouse_action(SDL_Event* event, GameState& gamestate) override;
 
     /** Convert camera coordinates into world (grid) coordinates.
     * @param pos Coord in camera position.
@@ -37,7 +36,7 @@ public:
     Vector2<int> screen_to_world_tile(Vector2<float> screen_pos);
 
     /** Render the grid with the cell data contained in world. */
-    void render();
+    virtual void render() override;
 
     /** Zoom function. Operation will redraw canvas.
     * @param grow int unit in wich the cell_size grow.
