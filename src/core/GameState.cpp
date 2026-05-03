@@ -50,15 +50,17 @@ GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window) :
     GameState(renderer, window),
     world(GameConst::GRID_SIZE),
     camera(*this, world),
-    cell_selection(*this)
+    cell_selection(*this, cell_selected)
 {
     ui = std::make_unique<GameUI_Play>(renderer, window, *this, camera);
+    SDL_Log("GameUI register Beggin");
     WindowLayout camera_layout{camera, 1};
     WindowLayout selection_layout{ cell_selection, 1 };
     Coord selection_layout_pos(3*info.w/4, 0);
     Coord selection_layout_size(info.w/4, info.h);
     ui->register_canva(selection_layout, selection_layout_size, selection_layout_pos);
     bind_input_manager();
+    SDL_Log("GameState construction success");
 }
 
 void GameState_Play::bind_input_manager() {

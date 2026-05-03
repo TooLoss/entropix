@@ -1,11 +1,13 @@
 #include "render/CellSelection.hpp"
-#include "core/GameState.hpp"
+#include "render/GameUI.hpp"
 #include "core/CellRegistry.hpp"
 #include <SDL3/SDL_log.h>
 
 void CellSelection::refresh_canva() {
     const Coord screen_size = this->get_size();
     const Coord relative_pos = this->get_position();
+    const size_t cell_count = static_cast<size_t>(CellID::COUNT) + 1;
+    SDL_Log("Cell %zu", cell_count);
 
     const float screen_w = static_cast<float>(screen_size.x);
     const float f_gap = static_cast<float>(gap);
@@ -15,13 +17,14 @@ void CellSelection::refresh_canva() {
 
     if (button_w < 0) button_w = 0;
 
-    size_t row_count = (static_cast<size_t>(CellID::COUNT) + cell_per_col - 1) / cell_per_col;
+    size_t row_count = (cell_count + cell_per_col - 1) / cell_per_col;
     Coord grid_size(cell_per_col, row_count);
 
     std::vector<std::unique_ptr<Button>> next_buttons;
-    next_buttons.reserve(cell_per_col * row_count); 
+    next_buttons.reserve(cell_count); 
 
-    for (auto l : grid_size.all_points()) {
+    auto cell_range = std::views::take(grid_size.all_points(), cell_count);
+    for (auto l : cell_range) {
         auto button = std::make_unique<Button>(this->get_gamestate());
         button->set_color({ 255, 255, 0, 255 });
 
@@ -33,7 +36,8 @@ void CellSelection::refresh_canva() {
 
         button->set_position(Coord(final_x, final_y));
         button->set_size(Coord(static_cast<size_t>(button_w), button_height));
-
+        CellID button_cell = static_cast<CellID>(l.vector_to_index(grid_size));
+        button->set_click_event([this, button_cell](){ this->selected_cell = button_cell; });
         button->refresh_canva();
         get_gameui()->register_canva({*button});
 
