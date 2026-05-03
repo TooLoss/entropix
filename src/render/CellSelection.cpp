@@ -6,7 +6,7 @@
 void CellSelection::refresh_canva() {
     const Coord screen_size = this->get_size();
     const Coord relative_pos = this->get_position();
-    const size_t cell_count = static_cast<size_t>(CellID::COUNT) + 1;
+    const size_t cell_count = static_cast<size_t>(CellID::COUNT);
     SDL_Log("Cell %zu", cell_count);
 
     const float screen_w = static_cast<float>(screen_size.x);
@@ -36,7 +36,9 @@ void CellSelection::refresh_canva() {
 
         button->set_position(Coord(final_x, final_y));
         button->set_size(Coord(static_cast<size_t>(button_w), button_height));
-        CellID button_cell = static_cast<CellID>(l.vector_to_index(grid_size));
+        size_t cell_id = l.vector_to_index(grid_size);
+        SDL_Log("Cell id : %zu", cell_id);
+        CellID button_cell = static_cast<CellID>(cell_id);
         button->set_click_event([this, button_cell](){ this->selected_cell = button_cell; });
         button->refresh_canva();
         get_gameui()->register_canva({*button});

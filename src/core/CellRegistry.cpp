@@ -4,6 +4,8 @@ CellRegistry::CellRegistry() {
     std::fill(cell_list.begin(), cell_list.end(), nullptr);
     register_cell<CellVoid>(CellID::VOID);
     register_cell<CellSand>(CellID::SAND);
+    register_cell<CellWater>(CellID::WATER);
+    register_cell<CellConcrete>(CellID::CONCRETE);
 }
 
 const Cell& CellRegistry::get(uint8_t id) const {

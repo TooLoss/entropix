@@ -13,6 +13,8 @@ add_library(sand_lib STATIC
     cells/Cell.cpp
     cells/CellVoid.cpp
     cells/CellSand.cpp
+    cells/CellConcrete.cpp
+    cells/CellWater.cpp
     cells/BehaviorLiquid.cpp
 )
 
