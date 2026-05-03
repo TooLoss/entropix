@@ -1,5 +1,6 @@
 #pragma once
 #include <stddef.h>
+#include <ranges>
 
 template <typename T>
 struct Vector2 {
@@ -26,22 +27,32 @@ struct Vector2 {
     Vector2 operator*(T i) const { return Vector2(this->x * i, this->y * i); }
 
     struct Iterator {
+        using iterator_category = std::input_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = Vector2;
+        using pointer = void; 
+        using reference = Vector2;
+
         T curX, curY, width;
 
         Vector2 operator*() const { return Vector2(curX, curY); }
 
         Iterator& operator++() {
-            curX++;
-            if (curX >= width) { 
+            if (++curX >= width) { 
                 curX = 0; 
                 curY++; 
             }
             return *this;
         }
 
+        void operator++(int) { ++(*this); }
+
+        bool operator==(const Iterator& other) const {
+            return (curY == other.curY) && (curX == other.curX);
+        }
+
         bool operator!=(const Iterator& other) const {
-            if (curY != other.curY) return true;
-            return curX != other.curX;
+            return !(*this == other);
         }
     };
 
