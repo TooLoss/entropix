@@ -5,6 +5,7 @@
 #include <SDL3/SDL_render.h>
 
 class GameState;
+class GameUI;
 
 class Canva {
 private:
@@ -34,4 +35,6 @@ public:
     void event_clicked();
 
     SDL_Renderer* get_renderer();
+    GameState& get_gamestate();
+    GameUI* get_gameui();
 };

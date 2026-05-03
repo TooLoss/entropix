@@ -5,6 +5,7 @@
 #include "core/InputManager.hpp"
 #include "render/GameUI.hpp"
 #include "render/Camera.hpp"
+#include "render/CellSelection.hpp"
 
 struct WindowInfo {
     int w, h;
@@ -31,6 +32,7 @@ public:
 
     SDL_Renderer* get_renderer();
     SDL_Window* get_window();
+    GameUI* get_gameui();
     Coord get_screen_size();
 };
 
@@ -41,15 +43,19 @@ private:
     bool paused{false};
     InputManager input_manager;
     World world;
-    Camera camera;
     CellID cell_selected;
-    SDL_Event last_event;
+
+    // UI
+
+    Camera camera;
+    CellSelection cell_selection;
 
     void bind_input_manager();
     void input_place(SDL_Event* event, CellID id, bool force = false);
 
     // Events
     
+    SDL_Event last_event;
     void toogle_pause();
 
 public:

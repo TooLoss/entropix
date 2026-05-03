@@ -8,6 +8,8 @@ add_library(sand_lib STATIC
     render/TerminalRender.cpp
     render/GameUI.cpp
     render/Canva.cpp
+    render/Button.cpp
+    render/CellSelection.cpp
     cells/Cell.cpp
     cells/CellVoid.cpp
     cells/CellSand.cpp

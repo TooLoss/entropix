@@ -44,3 +44,11 @@ void Canva::event_clicked() {
 SDL_Renderer* Canva::get_renderer() {
     return this->game_state.get_renderer();
 }
+
+GameState& Canva::get_gamestate() {
+    return this->game_state;
+}
+
+GameUI* Canva::get_gameui() {
+    return this->game_state.get_gameui();
+}

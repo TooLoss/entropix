@@ -8,6 +8,7 @@ enum class CellID : uint8_t {
     VOID      =  0,
     CONCRETE  =  1,
     SAND      =  2,
+    COUNT     =  3
 };
 
 class CellRegistry {

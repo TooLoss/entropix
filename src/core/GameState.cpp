@@ -9,7 +9,6 @@ GameState::GameState(SDL_Renderer *renderer, SDL_Window *window) :
     window(window),
     ui(nullptr)
 {
-    WindowInfo info;
     SDL_GetWindowSize(window, &info.w, &info.h);
 };
 
@@ -35,6 +34,10 @@ SDL_Window* GameState::get_window() {
     return this->window;
 }
 
+GameUI* GameState::get_gameui() {
+    return ui.get();
+}
+
 Coord GameState::get_screen_size() {
     return Coord(info.w, info.h);
 }
@@ -46,9 +49,15 @@ Coord GameState::get_screen_size() {
 GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window) :
     GameState(renderer, window),
     world(GameConst::GRID_SIZE),
-    camera(*this, world)
+    camera(*this, world),
+    cell_selection(*this)
 {
-    this->ui = std::make_unique<GameUI_Play>(renderer, window, *this, camera);
+    ui = std::make_unique<GameUI_Play>(renderer, window, *this, camera);
+    WindowLayout camera_layout{camera, 1};
+    WindowLayout selection_layout{ cell_selection, 1 };
+    Coord selection_layout_pos(3*info.w/4, 0);
+    Coord selection_layout_size(info.w/4, info.h);
+    ui->register_canva(selection_layout, selection_layout_size, selection_layout_pos);
     bind_input_manager();
 }
 
