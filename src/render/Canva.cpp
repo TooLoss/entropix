@@ -38,7 +38,8 @@ void Canva::set_click_event(std::function<void()> func) {
 }
 
 void Canva::event_clicked() {
-    click_event();
+    if (click_event)
+        click_event();
 }
 
 SDL_Renderer* Canva::get_renderer() {
