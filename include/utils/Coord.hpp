@@ -54,6 +54,9 @@ struct Vector2 {
     Range all_points() const { return Range{x, y}; }
 
     T vector_to_index(Vector2 size) const { return size.x * y + x; }
+    Vector2 index_to_vector(T index, T size_x) const {
+        return Vector2(index % size_x, index / size_x);
+    }
 };
 
 using Coord = Vector2<size_t>;
