@@ -42,7 +42,7 @@ Canva* GameUI::get_canvas(Coord hit) {
 void GameUI::init_ui() {}
 
 void GameUI::render() {
-    for (auto layout : layouts) {
+    for (auto& layout : layouts) {
         layout.canva.get().render();
     }
 }

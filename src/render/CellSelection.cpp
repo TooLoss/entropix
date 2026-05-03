@@ -35,6 +35,7 @@ void CellSelection::refresh_canva() {
         button->set_size(Coord(static_cast<size_t>(button_w), button_height));
 
         button->refresh_canva();
+        get_gameui()->register_canva({*button});
 
         next_buttons.push_back(std::move(button));
     }

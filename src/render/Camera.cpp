@@ -60,7 +60,6 @@ void Camera::render() {
             }
         }
     }
-    SDL_RenderPresent(this->get_renderer());
 }
 
 void Camera::zoom(int grow, Vector2<float> mouse_pos) {
