@@ -21,6 +21,8 @@ void Game::input(SDL_Event* event) {
 }
 
 void Game::set_game_state(std::unique_ptr<GameState> game_state) {
-    this->game_state = std::move(game_state);
-    this->game_state->init();
+    if (game_state) {
+        this->game_state = std::move(game_state);
+        this->game_state->init();
+    }
 }

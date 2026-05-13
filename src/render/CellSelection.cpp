@@ -41,7 +41,8 @@ void CellSelection::refresh_canva() {
         CellID button_cell = static_cast<CellID>(cell_id);
         button->set_click_event([this, button_cell](){ this->selected_cell = button_cell; });
         button->refresh_canva();
-        get_gameui()->register_canva({*button});
+        if (button)
+            get_gameui()->register_canva(WindowLayout(*button));
 
         next_buttons.push_back(std::move(button));
     }
