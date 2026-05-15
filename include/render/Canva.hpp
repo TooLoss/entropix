@@ -12,6 +12,7 @@ private:
     Coord pos;
     Coord size;
     GameState* game_state = nullptr;
+    GameUI* game_ui = nullptr;
 
     std::function<void()> click_event;
 
@@ -35,6 +36,7 @@ public:
     void event_clicked();
 
     void set_gamestate(GameState* state);
+    void set_gameui(GameUI* state);
 
     SDL_Renderer* get_renderer();
     GameState* get_gamestate();

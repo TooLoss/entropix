@@ -49,17 +49,24 @@ void CellSelection::refresh_canva() {
 
         // Register CellID in button
         size_t cell_id = l.vector_to_index(grid_size);
-        cell_ids.push_back(static_cast<CellID>(cell_id));
-        size_t vector_index = cell_ids.size() - 1;
-        if (selected_cell)
-            button->set_click_event([this, vector_index](){ this->selected_cell = &this->cell_ids[vector_index]; });
-        SDL_Log("Cell id : %zu", cell_id);
+        CellID actual_id = static_cast<CellID>(cell_id);
+        cell_ids.push_back(actual_id);
+
+        if (selected_cell) {
+            button->set_click_event([this, actual_id](){ 
+                if (this->selected_cell) {
+                    *this->selected_cell = actual_id; 
+                }
+            });
+        }
 
         // Refresh canva
         button->refresh_canva();
-        if (button)
-            get_gameui()->register_canva(WindowLayout(*button));
+        // if (button && get_gameui())
+        //     get_gameui()->register_canva(WindowLayout(*button, 2));
 
+        button->set_gamestate(this->get_gamestate());
+        button->set_gameui(this->get_gameui());
         next_buttons.push_back(std::move(button));
     }
 

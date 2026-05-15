@@ -1,6 +1,8 @@
 #include <SDL3/SDL_log.h>
 #include <algorithm>
 #include "render/GameUI.hpp"
+#include "render/CellSelection.hpp"
+#include "core/GameState.hpp"
 
 GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate) :
     renderer(renderer),
@@ -12,6 +14,7 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
 
 void GameUI::register_canva(WindowLayout new_layout) {
     Canva& in_canvas = new_layout.canva.get();
+    in_canvas.set_gameui(this);
     in_canvas.refresh_canva();
 
     auto it = std::upper_bound(layouts.begin(), layouts.end(), new_layout, 
@@ -49,30 +52,35 @@ void GameUI::render() {
     }
 }
 
+GameState& GameUI::get_gamestate() {
+    return this->gamestate;
+}
+
 /*
 *   GameUI_Play
 */
 
 GameUI_Play::GameUI_Play(SDL_Renderer *renderer, SDL_Window *window,
-                         GameState &gamestate, Camera &camera) :
+                         GameState &gamestate, Camera &camera, CellSelection &cell_selection) :
     GameUI(renderer, window, gamestate),
-    camera(camera)
+    camera(camera),
+    cell_selection(cell_selection)
 {
     init_ui();
 }
 
-void GameUI_Play::init_camera() {
-    layouts.reserve(2);
+void GameUI_Play::init_ui() {
+    layouts.reserve(4);
 
-    int window_x, window_y;
-    SDL_GetWindowSize(this->window, &window_x, &window_y);
+    Coord screen = this->get_gamestate().get_screen_size();
 
     Coord cam_pos = Coord(0);
-    Coord cam_size = Coord(3*window_x/4, window_y);
+    Coord cam_size = Coord(3*screen.x/4, screen.y);
     WindowLayout cam_layout(camera);
     this->register_canva(cam_layout, cam_size, cam_pos);
-}
 
-void GameUI_Play::init_ui() {
-    init_camera();
+    Coord selection_layout_pos(3*screen.x/4, 0);
+    Coord selection_layout_size(screen.x/4, screen.y);
+    WindowLayout selection_layout{ cell_selection };
+    this->register_canva(selection_layout, selection_layout_size, selection_layout_pos);
 }

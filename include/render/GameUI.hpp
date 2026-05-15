@@ -3,6 +3,7 @@
 #include <SDL3/SDL_video.h>
 #include <functional>
 #include "render/Camera.hpp"
+#include "render/CellSelection.hpp"
 
 struct WindowLayout {
 
@@ -31,19 +32,20 @@ public:
     Canva* get_canvas(Coord hit);
     virtual void init_ui();
     virtual void render();
+    GameState& get_gamestate();
 };
 
 
 
 class GameUI_Play : public GameUI {
 private:
-    Camera& camera;
-
-    void init_camera();
+    Camera &camera;
+    CellSelection &cell_selection;
 
 public:
     GameUI_Play(SDL_Renderer *renderer, SDL_Window *window,
-                GameState &gamestate, Camera &camera);
+                GameState &gamestate, Camera &camera,
+                CellSelection &cell_selection);
 
     virtual void init_ui() override;
 };

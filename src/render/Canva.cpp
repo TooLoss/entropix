@@ -55,5 +55,9 @@ GameState* Canva::get_gamestate() {
 }
 
 GameUI* Canva::get_gameui() {
-    return this->game_state ? this->game_state->get_gameui() : nullptr;
+    return this->game_ui;
+}
+
+void Canva::set_gameui(GameUI* state) {
+    this->game_ui = state;
 }
