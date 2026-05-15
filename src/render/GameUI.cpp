@@ -38,7 +38,7 @@ Canva* GameUI::get_canvas(Coord hit) {
     for (auto &layout : layouts) {
         Canva &canva = layout.canva.get();
         if (canva.is_hit(hit)) {
-            return &canva;
+            return canva.get_hit(hit);
         }
     }
     return nullptr;

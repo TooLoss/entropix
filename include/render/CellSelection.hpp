@@ -20,6 +20,7 @@ public:
 
     virtual void refresh_canva() override;
     virtual void render() override;
+    virtual Canva* get_hit(const Coord &hit) override;
 
     void set_color(SDL_Color color);
 };

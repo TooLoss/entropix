@@ -31,6 +31,7 @@ public:
 
     virtual void refresh_canva();
     virtual void render();
+    virtual Canva* get_hit(const Coord &hit);
 
     void set_click_event(std::function<void()> func);
     void event_clicked();

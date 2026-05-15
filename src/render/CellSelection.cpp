@@ -80,3 +80,11 @@ void CellSelection::render() {
         button->render();
     }
 }
+
+Canva* CellSelection::get_hit(const Coord &hit) {
+    for (auto& button : buttons) {
+        if (button->is_hit(hit))
+            return button.get();
+    }
+    return nullptr;
+}

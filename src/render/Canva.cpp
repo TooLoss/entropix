@@ -33,6 +33,10 @@ void Canva::refresh_canva() {}
 
 void Canva::render() {}
 
+Canva* Canva::get_hit(const Coord &hit) {
+    return this;
+}
+
 void Canva::set_click_event(std::function<void()> func) {
     click_event = func;
 }
