@@ -3,6 +3,15 @@
 #include "core/CellRegistry.hpp"
 #include <SDL3/SDL_log.h>
 
+CellSelection::CellSelection() {
+
+}
+
+void CellSelection::init(GameState* gamestate, CellID* bind_cell) {
+    this->selected_cell = bind_cell;
+    set_gamestate(gamestate);
+}
+
 void CellSelection::refresh_canva() {
     const Coord screen_size = this->get_size();
     const Coord relative_pos = this->get_position();
@@ -22,10 +31,11 @@ void CellSelection::refresh_canva() {
 
     std::vector<std::unique_ptr<Button>> next_buttons;
     next_buttons.reserve(cell_count); 
+    cell_ids.reserve(cell_count); 
 
     auto cell_range = std::views::take(grid_size.all_points(), cell_count);
     for (auto l : cell_range) {
-        auto button = std::make_unique<Button>(this->get_gamestate());
+        auto button = std::make_unique<Button>();
         button->set_color({ 255, 255, 0, 255 });
 
         float fx = f_gap + ((button_w + f_gap) * static_cast<float>(l.x));
@@ -36,10 +46,16 @@ void CellSelection::refresh_canva() {
 
         button->set_position(Coord(final_x, final_y));
         button->set_size(Coord(static_cast<size_t>(button_w), button_height));
+
+        // Register CellID in button
         size_t cell_id = l.vector_to_index(grid_size);
+        cell_ids.push_back(static_cast<CellID>(cell_id));
+        size_t vector_index = cell_ids.size() - 1;
+        if (selected_cell)
+            button->set_click_event([this, vector_index](){ this->selected_cell = &this->cell_ids[vector_index]; });
         SDL_Log("Cell id : %zu", cell_id);
-        CellID button_cell = static_cast<CellID>(cell_id);
-        button->set_click_event([this, button_cell](){ this->selected_cell = button_cell; });
+
+        // Refresh canva
         button->refresh_canva();
         if (button)
             get_gameui()->register_canva(WindowLayout(*button));

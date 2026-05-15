@@ -3,16 +3,20 @@
 #include "render/Camera.hpp"
 #include "render/SmartGrid.hpp"
 
-Camera::Camera(GameState& owner, World& world) :
-    Camera(owner, world, Coord(0), Coord(0))
+Camera::Camera() :
+    Camera(Coord(0), Coord(0))
 {
    draw_grid();
 }
 
-Camera::Camera(GameState& owner, World& world, Coord c_pos, Coord c_size) :
-    Canva(owner, c_pos, c_size),
-    world(world),
+Camera::Camera(Coord c_pos, Coord c_size) :
+    Canva(c_pos, c_size),
     cell_size(99) {}
+
+void Camera::init(GameState* gamestate, World* world) {
+    set_gamestate(gamestate);
+    this->world = world;
+}
 
 void Camera::draw_grid() {
     Coord canvas_size = get_size();
@@ -48,15 +52,16 @@ Vector2<int> Camera::screen_to_world_tile(Vector2<float> screen_pos) {
 }
 
 void Camera::render() {
+    if (!world) return;
     for (int i = 0; i < grid_dim.x; i++) {
         for (int j = 0; j < grid_dim.y; j++) {
             Coord world_pos(world_pos_offset.x + i, world_pos_offset.y + j);
-            if (!world.is_out_of_range(world_pos)) {
-                Pixel pixel = world.get_pixel(world_pos);
-                const Cell& cell = world.get_registry().get(pixel.id);
+            if (!world->is_out_of_range(world_pos)) {
+                Pixel pixel = world->get_pixel(world_pos);
+                const Cell& cell = world->get_registry().get(pixel.id);
                 size_t render_index = Coord(i, j).vector_to_index(grid_dim);
                 
-                cell.render(world_pos, world, this->get_renderer(), &render_grid[render_index]);
+                cell.render(world_pos, *world, this->get_renderer(), &render_grid[render_index]);
             }
         }
     }

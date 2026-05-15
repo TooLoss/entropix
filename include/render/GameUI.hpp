@@ -23,6 +23,7 @@ protected:
     std::vector<WindowLayout> layouts;
 
 public:
+    virtual ~GameUI() = default;
     GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState &gamestate);
     
     void register_canva(WindowLayout new_layout);

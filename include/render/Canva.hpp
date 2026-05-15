@@ -11,13 +11,13 @@ class Canva {
 private:
     Coord pos;
     Coord size;
-    GameState& game_state;
+    GameState* game_state = nullptr;
 
     std::function<void()> click_event;
 
 public:
-    Canva(GameState& owner, Coord pos, Coord size) : pos(pos), size(size), game_state(owner) {}
-    Canva(GameState& owner) : pos(0), size(0), game_state(owner) {}
+    Canva(Coord pos, Coord size) : pos(pos), size(size) {}
+    Canva() : pos(0), size(0) {}
 
     Coord get_position() const;
     Coord get_size() const;
@@ -34,7 +34,9 @@ public:
     void set_click_event(std::function<void()> func);
     void event_clicked();
 
+    void set_gamestate(GameState* state);
+
     SDL_Renderer* get_renderer();
-    GameState& get_gamestate();
+    GameState* get_gamestate();
     GameUI* get_gameui();
 };

@@ -11,12 +11,14 @@ GameUI::GameUI(SDL_Renderer *renderer, SDL_Window *window, GameState& gamestate)
 }
 
 void GameUI::register_canva(WindowLayout new_layout) {
+    Canva& in_canvas = new_layout.canva.get();
+    in_canvas.refresh_canva();
+
     auto it = std::upper_bound(layouts.begin(), layouts.end(), new_layout, 
         [](const WindowLayout& a, const WindowLayout& b) {
             return a.z_index < b.z_index;
         });
-    Canva& in_canvas = new_layout.canva.get();
-    in_canvas.refresh_canva();
+
     this->layouts.insert(it, new_layout);
 }
 
@@ -30,8 +32,8 @@ void GameUI::register_canva(WindowLayout new_layout, Coord size, Coord pos) {
 Canva* GameUI::get_canvas(Coord hit) {
     // Already sort by z_index
     Canva* hit_canva = nullptr;
-    for (auto layout : layouts) {
-        Canva& canva = layout.canva.get();
+    for (auto &layout : layouts) {
+        Canva &canva = layout.canva.get();
         if (canva.is_hit(hit)) {
             return &canva;
         }

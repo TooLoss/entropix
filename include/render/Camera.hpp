@@ -6,7 +6,7 @@
 class Camera : public Canva {
 private:
     /** World grid. */
-    World& world;
+    World* world = nullptr;
     /** Render grid contains FRects, will be colored. */
     std::vector<SDL_FRect> render_grid;
     /** Size of FRect inside render_grid. */
@@ -23,8 +23,10 @@ private:
     void draw_grid();
 
 public:
-    Camera(GameState& owner, World& world, Coord c_pos, Coord c_size);
-    Camera(GameState& owner, World& world);
+    Camera(Coord c_pos, Coord c_size);
+    Camera();
+
+    void init(GameState* gamestate, World* world);
 
     virtual void refresh_canva() override;
 

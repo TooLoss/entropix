@@ -1,5 +1,6 @@
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_mouse.h>
+#include <memory>
 #include "core/GameState.hpp"
 #include "core/GameConst.hpp"
 #include "core/CellRegistry.hpp"
@@ -12,11 +13,13 @@ GameState::GameState(SDL_Renderer *renderer, SDL_Window *window) :
     SDL_GetWindowSize(window, &info.w, &info.h);
 };
 
-GameState::~GameState() {}
-
 void GameState::render() {
     if (ui) this->ui->render();
 }
+
+void GameState::update() {}
+
+void GameState::init() {}
 
 void GameState::click_canvas(SDL_Event* event) {
     Coord hit(event->button.x, event->button.y);
@@ -48,13 +51,14 @@ Coord GameState::get_screen_size() {
 
 GameState_Play::GameState_Play(SDL_Renderer *renderer, SDL_Window *window) :
     GameState(renderer, window),
-    world(GameConst::GRID_SIZE),
-    camera(*this, world),
-    cell_selection(*this, cell_selected)
+    world(GameConst::GRID_SIZE)
 {
+    // Create UI components
+    camera.init(this, &world);
+    cell_selection.init(this, &this->cell_selected);
     ui = std::make_unique<GameUI_Play>(renderer, window, *this, camera);
-    SDL_Log("GameUI register Beggin");
-    WindowLayout camera_layout{camera, 1};
+
+    // WindowLayout camera.layout{camera. 1};
     WindowLayout selection_layout{ cell_selection, 1 };
     Coord selection_layout_pos(3*info.w/4, 0);
     Coord selection_layout_size(info.w/4, info.h);

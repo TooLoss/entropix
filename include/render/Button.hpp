@@ -7,7 +7,7 @@ private:
     SDL_Color button_color;
 
 public:
-    Button(GameState& owner) : Canva(owner) {};
+    Button() {};
 
     virtual void refresh_canva() override;
     virtual void render() override;

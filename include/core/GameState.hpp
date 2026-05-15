@@ -21,13 +21,12 @@ protected:
     void click_canvas(SDL_Event* event);
 
 public:
+    virtual ~GameState() = default;
     GameState(SDL_Renderer *renderer, SDL_Window *window);
 
-    virtual ~GameState();
-
     virtual void render();
-    virtual void update() = 0;
-    virtual void init() = 0;
+    virtual void update();
+    virtual void init();
     virtual void input(SDL_Event* event) = 0;
 
     SDL_Renderer* get_renderer();

@@ -1,5 +1,4 @@
 #include "core/Game.hpp"
-#include "core/GameConst.hpp"
 
 Game::Game(SDL_Renderer *renderer, SDL_Window *window)
 : renderer(renderer), window(window) {}
@@ -21,8 +20,8 @@ void Game::input(SDL_Event* event) {
 }
 
 void Game::set_game_state(std::unique_ptr<GameState> game_state) {
-    if (game_state) {
+    if (game_state != nullptr) {
+        game_state->init();
         this->game_state = std::move(game_state);
-        this->game_state->init();
     }
 }

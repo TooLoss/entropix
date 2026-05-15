@@ -42,14 +42,18 @@ void Canva::event_clicked() {
         click_event();
 }
 
-SDL_Renderer* Canva::get_renderer() {
-    return this->game_state.get_renderer();
+void Canva::set_gamestate(GameState* state) {
+    this->game_state = state;
 }
 
-GameState& Canva::get_gamestate() {
+SDL_Renderer* Canva::get_renderer() {
+    return this->game_state ? this->game_state->get_renderer() : nullptr;
+}
+
+GameState* Canva::get_gamestate() {
     return this->game_state;
 }
 
 GameUI* Canva::get_gameui() {
-    return this->game_state.get_gameui();
+    return this->game_state ? this->game_state->get_gameui() : nullptr;
 }
