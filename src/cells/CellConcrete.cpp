@@ -1,5 +1,5 @@
 #include "cells/CellConcrete.hpp"
 
-void CellConcrete::update(Coord pos, World& world) const {
+void CellConcrete::update(Coord &pos, World& world) const {
 
 }

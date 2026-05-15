@@ -7,7 +7,7 @@ uint8_t Cell::get_update_frame() const {
     return this->update_each_frame;
 }
 
-void Cell::render(Coord pos, World &world, SDL_Renderer *renderer, const SDL_FRect *rect) const {
+void Cell::render(Coord& pos, World &world, SDL_Renderer *renderer, const SDL_FRect *rect) const {
     Uint8 r, g, b, a;
     SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
     SDL_SetRenderDrawColor(renderer,
@@ -17,4 +17,8 @@ void Cell::render(Coord pos, World &world, SDL_Renderer *renderer, const SDL_FRe
                            cell_color.a);
     SDL_RenderFillRect(renderer, rect);
     SDL_SetRenderDrawColor(renderer, r, g, b, a);
+}
+
+State Cell::get_state() const {
+    return state;
 }
